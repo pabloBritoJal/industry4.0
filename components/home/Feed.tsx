@@ -1,40 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import homeMachine from "@assets/images/homeMachine.png";
-import energy from "@assets/images/energy.png";
-import monitoring from "@assets/images/monitoring.png";
+import { captions } from "@locales/en/captions";
+import { mockSolutions } from "@data/mockSolutionsMain";
 
 const Feed = () => {
-  const solutions = [
-    {
-      id: 1,
-      title: "Process Monitoring and Analysis",
-      description:
-        "Enhance efficiency and quality of production processes using remote monitoring technologies and data analysis.",
-      image: monitoring,
-    },
-    {
-      id: 2,
-      title: "Predictive Maintenance",
-      description:
-        "Optimize maintenance with Industry 4.0: predicting and preventing equipment and machine failures.",
-      image: homeMachine,
-    },
-    {
-      id: 3,
-      title: "Energy Management in Industry 4.0",
-      description:
-        "Combine advanced technologies to reduce costs, improve efficiency and sustainability in production, and promote business competitiveness.",
-      image: energy,
-    },
-  ];
-
   return (
-    <section className="py-10">
-      <div className="container mx-auto">
-        <h2 className="pl-5 text-3xl font-bold mb-4">Solutions</h2>
+    <section className="w-full py-10 px-2 md:px-5">
+      <div className="mx-auto">
+        <h2 className="pl-5 text-3xl font-bold mb-4">
+          {captions.solutionsTitle}
+        </h2>
         <div className="px-5 grid grid-cols-1 md:grid-cols-3 gap-4">
-          {solutions.map((solution) => (
+          {mockSolutions.map((solution) => (
             <div
               key={solution.id}
               className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col items-center"
@@ -60,7 +37,7 @@ const Feed = () => {
             className="bg-orange-600 hover:bg-orange-400 text-white px-4 py-2 rounded-full"
             href="/solutions"
           >
-            See more
+            {captions.seeMore}
           </Link>
         </div>
       </div>

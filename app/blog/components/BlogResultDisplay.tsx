@@ -13,8 +13,8 @@ const BlogResultDisplay = () => {
   return (
     <>
       <div className="flex items-center justify-between h-14 px-7 pt-10">
-        <div>
-          <button className="border-2 p-2 rounded-full border-green-pallet-light text-green-pallet-light hover:text-white hover:bg-primary-orange hover:opacity-80">
+        <div className="flex items-center">
+          <button className="block md:hidden border-2 p-2 rounded-full border-green-pallet-light text-green-pallet-light hover:text-white hover:bg-primary-orange hover:opacity-80">
             <FiltersIcon className="w-[12px] h-[12px]" />
           </button>
           <span className="pl-2 text-black text-sm font-semibold">255 results</span>

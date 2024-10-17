@@ -4,15 +4,17 @@ const Footer = () => {
   return (
     <section className="w-full h-60 bg-black py-6 mt-24">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-3 mb-16">
-          <div>
-            <h2 className="text-lg font-medium text-white">Hassler TC</h2>
-            <h4 className="text-sm text-white">Industry 4.0 consulting</h4>
+        <div className="md:grid md:grid-cols-3 mb-16 flex justify-between">
+          <div className="w-[70%] md:w-full">
+            <h2 className="text-lg font-medium text-white">Pablo Brito</h2>
+            <h4 className="text-sm text-white">
+              Software development & Industry 4.0
+            </h4>
           </div>
-          <div className="col-span-2 grid grid-cols-4 gap-2 w-full px-6">
+          <div className="col-span-2 flex flex-col md:flex-row gap-x-10 gap-6 w-[30%] md:w-full px-6">
             <div>
               <Link
-                className="text-base font-medium text-gray-300 hover:text-white underline"
+                className="text-base font-medium text-gray-300 hover:text-white underline flex justify-end md:justify-start"
                 href={"/"}
               >
                 Home
@@ -20,36 +22,36 @@ const Footer = () => {
             </div>
             <div>
               <Link
-                className="text-base text-gray-300 font-medium hover:text-white underline"
-                href={"/"}
+                className="text-base text-gray-300 font-medium hover:text-white underline flex justify-end md:justify-start"
+                href={"/blog"}
               >
-                Solutions
+                Blog
               </Link>
-              <h6 className="text-[10px] text-slate-200">
-                Discover use cases for applying Industry 4.0 technologies in
-                various areas.
-              </h6>
-            </div>
-            <div>
-              <Link
-                className="text-base text-gray-300 font-medium hover:text-white underline"
-                href={"/"}
-              >
-                Learn more
-              </Link>
-              <h6 className="text-[10px] text-slate-200">
+              <h6 className="text-[10px] text-slate-200 hidden md:block">
                 Expand your knowledge in one of the most important areas of
                 modern industry.
               </h6>
             </div>
             <div>
               <Link
-                className="text-base text-gray-300 font-medium hover:text-white underline"
-                href={"/"}
+                className="text-base text-gray-300 font-medium hover:text-white underline flex justify-end md:justify-start"
+                href={"/solutions"}
+              >
+                Solutions
+              </Link>
+              <h6 className="text-[10px] text-slate-200 hidden md:block">
+                Discover use cases for applying Industry 4.0 technologies in
+                various areas.
+              </h6>
+            </div>
+            <div>
+              <Link
+                className="text-base text-gray-300 font-medium hover:text-white underline flex justify-end md:justify-start"
+                href={"/aboutUs"}
               >
                 About Us
               </Link>
-              <h6 className="text-[10px] text-slate-200">
+              <h6 className="text-[10px] text-slate-200 hidden md:block">
                 Learn more about our company, what we do, and how we do it.
               </h6>
             </div>

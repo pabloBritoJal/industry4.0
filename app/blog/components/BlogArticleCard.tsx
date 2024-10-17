@@ -21,7 +21,7 @@ const BlogArticleCard = ({
   imageUrl,
 }: BlogArticleCardProps) => {
   return (
-    <div className="w-full h-72 lg:h-40 px-3 border-2 lg:px-6 py-3 grid grid-flow-row grid-rows-6 lg:grid-rows-5 rounded-2xl">
+    <div className="w-full h-72 lg:h-44 px-3 border-2 lg:px-6 py-3 grid grid-flow-row grid-rows-6 lg:grid-rows-5 rounded-2xl">
       <div className="flex flex-col row-span-1">
         <div>
           <h3 className="text-lg font-bold text-green-pallet">Category</h3>
@@ -29,7 +29,7 @@ const BlogArticleCard = ({
       </div>
       <div className="flex flex-col row-span-2 lg:row-span-1">
         <div>
-          <h3 className="text-lg font-bold">{title}</h3>
+          <h3 className="text-base font-bold">{title}</h3>
         </div>
       </div>
       <div className="flex flex-col row-span-2">

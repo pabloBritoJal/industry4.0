@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import BlogResultDisplay from "./components/BlogResultDisplay";
 import BlogSectionHeader from "./components/BlogSectionHeader";
+import FilterSide from "./components/BlogFilterSide";
 
 const BlogPage = () => {
   const { pathName, setPathName } = usePathNameStore((state) => state);
@@ -18,9 +19,11 @@ const BlogPage = () => {
       <section>
         <BlogSectionHeader />
       </section>
-      <section className="lg:w-screen grid grid-flow-col grid-cols-8 bg-white">
-        <section className="hidden lg:block lg:col-span-2">filterSide</section>
-        <section className="col-span-8 w-full lg:col-span-6">
+      <section className="lg:w-screen px-0 md:px-10 flex justify-between">
+        <aside className="h-full w-[20%] shadow-lg p-4 hidden md:block bg-white rounded-3xl">
+          <FilterSide />
+        </aside>
+        <section className="w-full md:w-[75%] bg-white rounded-3xl">
           <BlogResultDisplay />
         </section>
       </section>

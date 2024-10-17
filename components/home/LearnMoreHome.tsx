@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import learnMore from "@assets/images/learnMore.jpeg"
-import monitor from "@assets/images/monitor.jpeg"
+import learnMore from "@assets/images/img/learnMore.jpeg";
+import monitor from "@assets/images/img/monitor.jpg";
 
 const LearnMoreHome = () => {
   return (
-    <div className="relative mb-8 bg-gradient-to-r from-orange-400 to-orange-500 px-16 py-16 overflow-hidden">
+    <div className="w-full relative mb-8 bg-gradient-to-r from-orange-400 to-orange-500 px-3 py-16 overflow-hidden">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         <div className="md:w-1/2">
           <h2 className="text-4xl font-bold text-white mb-6">
@@ -28,6 +28,7 @@ const LearnMoreHome = () => {
             width={300}
             height={300}
             alt="Learn more about Industry 4.0"
+            className="hidden md:block"
           />
           <Image
             src={monitor}

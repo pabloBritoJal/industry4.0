@@ -22,7 +22,7 @@ const Carousel = () => {
     }
   };
   return (
-    <div className="w-full h-auto flex py-14">
+    <div className="w-full h-auto flex py-14 px-5 md:px-0">
       <button
         className="hidden md:block opacity-20 hover:opacity-100 bg-gray-100"
         onClick={slideLeft}
@@ -31,7 +31,7 @@ const Carousel = () => {
       </button>
       <div
         ref={sliderRef}
-        className="w-full h-48 gap-6 flex overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide"
+        className="w-full h-auto gap-6 flex overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide"
       >
         {data.map((item) => (
           <ArticleCard
