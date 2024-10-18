@@ -1,7 +1,6 @@
 "use client";
 
-import { data } from "@data/mockData.js";
-import Image from "next/image";
+import { blogData } from "@data/blogData";
 import ChevronLeft from "@assets/icons/chevronLeft.svg";
 import ChevronRight from "@assets/icons/chevronRight.svg";
 import { useRef } from "react";
@@ -33,14 +32,15 @@ const Carousel = () => {
         ref={sliderRef}
         className="w-full h-auto gap-6 flex overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide"
       >
-        {data.map((item) => (
+        {blogData.map((item) => (
           <ArticleCard
             title={item.title}
             excerpt={item.excerpt}
             author={item.author}
             date={item.date}
-            imageUrl={item.imageUrl}
+            imageUrl={item.urlPicture}
             key={item.id}
+            url={item.url}
           />
         ))}
       </div>

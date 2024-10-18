@@ -1,79 +1,107 @@
-import React from "react";
+import React, { useState } from "react";
+import { captions } from "@locales/en/captions";
 
-const FilterSide: React.FC = () => {
+interface FilterSideProps {
+  selectedFilters: {
+    industries: string[];
+    applications: string[];
+    technologies: string[];
+  };
+  setSelectedFilters: React.Dispatch<
+    React.SetStateAction<{
+      industries: string[];
+      applications: string[];
+      technologies: string[];
+    }>
+  >;
+}
+
+const FilterSide: React.FC<FilterSideProps> = ({
+  selectedFilters,
+  setSelectedFilters,
+}) => {
+  const handleFilterChange = (
+    filterType: "industries" | "applications" | "technologies",
+    filterValue: string
+  ) => {
+    setSelectedFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters };
+      if (updatedFilters[filterType].includes(filterValue)) {
+        updatedFilters[filterType] = updatedFilters[filterType].filter(
+          (item) => item !== filterValue
+        );
+      } else {
+        updatedFilters[filterType].push(filterValue);
+      }
+      return updatedFilters;
+    });
+  };
+
   return (
-   <div>
-      <h2 className="text-lg font-bold mb-4">Filter by</h2>
+    <div>
+      <h2 className="text-lg font-bold mb-4">{captions.filterSide.title}</h2>
 
-      {/* Filtros por Industry */}
+      {/* Industry Filter */}
       <div className="mb-4">
-        <h3 className="font-semibold">Industry</h3>
+        <h3 className="font-semibold">{captions.filterSide.industry.title}</h3>
         <ul className="list-none space-y-2">
-          <li>
-            <input type="checkbox" id="iot" className="mr-2" />
-            <label htmlFor="iot">Internet of Things</label>
-          </li>
-          <li>
-            <input type="checkbox" id="manufacturing" className="mr-2" />
-            <label htmlFor="manufacturing">Manufacturing</label>
-          </li>
-          <li>
-            <input type="checkbox" id="security" className="mr-2" />
-            <label htmlFor="security">IT and Security</label>
-          </li>
-          <li>
-            <input type="checkbox" id="healthcare" className="mr-2" />
-            <label htmlFor="healthcare">Healthcare</label>
-          </li>
+          {captions.filterSide.industry.options.map((option, index) => (
+            <li key={index}>
+              <input
+                type="checkbox"
+                id={option}
+                className="mr-2"
+                checked={selectedFilters.industries.includes(option)}
+                onChange={() => handleFilterChange("industries", option)}
+              />
+              <label htmlFor={option}>{option}</label>
+            </li>
+          ))}
         </ul>
       </div>
 
-      {/* Filtros por Application */}
+      {/* Application Filter */}
       <div className="mb-4">
-        <h3 className="font-semibold">Application</h3>
+        <h3 className="font-semibold">
+          {captions.filterSide.application.title}
+        </h3>
         <ul className="list-none space-y-2">
-          <li>
-            <input type="checkbox" id="remote-management" className="mr-2" />
-            <label htmlFor="remote-management">Remote Management</label>
-          </li>
-          <li>
-            <input type="checkbox" id="automation" className="mr-2" />
-            <label htmlFor="automation">Automation</label>
-          </li>
-          <li>
-            <input type="checkbox" id="asset-tracking" className="mr-2" />
-            <label htmlFor="asset-tracking">Asset Tracking</label>
-          </li>
-          <li>
-            <input type="checkbox" id="sustainability" className="mr-2" />
-            <label htmlFor="sustainability">Sustainability</label>
-          </li>
+          {captions.filterSide.application.options.map((option, index) => (
+            <li key={index}>
+              <input
+                type="checkbox"
+                id={option}
+                className="mr-2"
+                checked={selectedFilters.applications.includes(option)}
+                onChange={() => handleFilterChange("applications", option)}
+              />
+              <label htmlFor={option}>{option}</label>
+            </li>
+          ))}
         </ul>
       </div>
 
-      {/* Filtros por Technology */}
+      {/* Technology Filter */}
       <div className="mb-4">
-        <h3 className="font-semibold">Technology</h3>
+        <h3 className="font-semibold">
+          {captions.filterSide.technology.title}
+        </h3>
         <ul className="list-none space-y-2">
-          <li>
-            <input type="checkbox" id="connectivity" className="mr-2" />
-            <label htmlFor="connectivity">Connectivity</label>
-          </li>
-          <li>
-            <input type="checkbox" id="data-analytics" className="mr-2" />
-            <label htmlFor="data-analytics">Data Analytics</label>
-          </li>
-          <li>
-            <input type="checkbox" id="ai" className="mr-2" />
-            <label htmlFor="ai">Artificial Intelligence</label>
-          </li>
-          <li>
-            <input type="checkbox" id="cybersecurity" className="mr-2" />
-            <label htmlFor="cybersecurity">Cybersecurity</label>
-          </li>
+          {captions.filterSide.technology.options.map((option, index) => (
+            <li key={index}>
+              <input
+                type="checkbox"
+                id={option}
+                className="mr-2"
+                checked={selectedFilters.technologies.includes(option)}
+                onChange={() => handleFilterChange("technologies", option)}
+              />
+              <label htmlFor={option}>{option}</label>
+            </li>
+          ))}
         </ul>
       </div>
-      </div>
+    </div>
   );
 };
 

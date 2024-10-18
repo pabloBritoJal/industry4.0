@@ -1,24 +1,48 @@
-import { data } from "@data/mockData.js";
+import { blogData, Article } from "@data/blogData";
 import BlogArticleCard from "./BlogArticleCard";
 import Link from "next/link";
-import FiltersIcon from "@assets/icons/filters.svg";
 import DropdownSelect from "@components/global/DropdownSelect";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const sortOptions = ["Recommended", "Most popular", "Most recent"];
 
-const BlogResultDisplay = () => {
+interface BlogResultDisplayProps {
+  selectedFilters: {
+    industries: string[];
+    applications: string[];
+    technologies: string[];
+  };
+}
+
+const BlogResultDisplay: React.FC<BlogResultDisplayProps> = ({
+  selectedFilters,
+}) => {
   const [sortBy, setSortBy] = useState(sortOptions[0]);
+
+  const filteredData = useMemo(() => {
+    return blogData.filter((article: Article) => {
+      const industryMatch =
+        selectedFilters.industries.length === 0 ||
+        article.industries.some((industry) =>
+          selectedFilters.industries.includes(industry)
+        );
+      const applicationMatch =
+        selectedFilters.applications.length === 0 ||
+        article.applications.some((application) =>
+          selectedFilters.applications.includes(application)
+        );
+      const technologyMatch =
+        selectedFilters.technologies.length === 0 ||
+        article.technologies.some((technology) =>
+          selectedFilters.technologies.includes(technology)
+        );
+      return industryMatch && applicationMatch && technologyMatch;
+    });
+  }, [selectedFilters]);
 
   return (
     <>
       <div className="flex items-center justify-between h-14 px-7 pt-10">
-        <div className="flex items-center">
-          <button className="block md:hidden border-2 p-2 rounded-full border-green-pallet-light text-green-pallet-light hover:text-white hover:bg-primary-orange hover:opacity-80">
-            <FiltersIcon className="w-[12px] h-[12px]" />
-          </button>
-          <span className="pl-2 text-black text-sm font-semibold">255 results</span>
-        </div>
         <DropdownSelect
           options={sortOptions}
           value={sortBy}
@@ -26,14 +50,20 @@ const BlogResultDisplay = () => {
         />
       </div>
       <div className="flex flex-col gap-4 px-7 pt-5">
-        {data.map((article) => (
-          <Link href={"/"} key={article.id} className="rounded-2xl hover:shadow-xl">
+        {filteredData.map((article) => (
+          <Link
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            key={article.id}
+            className="rounded-2xl hover:shadow-xl"
+          >
             <BlogArticleCard
               title={article.title}
               excerpt={article.excerpt}
               author={article.author}
               date={article.date}
-              imageUrl={article.imageUrl}
+              imageUrl={article.urlPicture}
               key={article.id}
             />
           </Link>

@@ -1,5 +1,6 @@
 export interface ISolutions {
     id: number;
+    slug: string;
     title: string;
     description: string;
     image: string;

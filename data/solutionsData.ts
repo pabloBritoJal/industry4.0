@@ -3,6 +3,7 @@ import { ISolutions } from "../types/solutionsType";
 export const solutionsData: ISolutions[] = [
   {
     id: 1,
+    slug: "1",
     title: "Agricultura Inteligente en la Industria 4.0",
     description:
       "La agricultura inteligente utiliza sensores IoT y análisis de datos para optimizar el uso del agua, mejorar la calidad del suelo y aumentar la productividad de los cultivos.",
@@ -13,6 +14,7 @@ export const solutionsData: ISolutions[] = [
   },
   {
     id: 2,
+    slug: "1",
     title: "Automatización en la Industria Automotriz",
     description:
       "Los robots y la automatización avanzada están transformando la industria automotriz, mejorando la eficiencia en la producción y garantizando una mayor calidad en los vehículos.",
