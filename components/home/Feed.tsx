@@ -16,13 +16,13 @@ const Feed = () => {
               key={solution.id}
               className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col items-center"
             >
-              <div className="h-80 flex items-center">
+              <div className="w-60 h-60 flex items-center rounded-xl my-5">
                 <Image
                   src={solution.image}
                   alt={solution.title}
                   width={300}
                   height={300}
-                  className="object-cover"
+                  className="object-cover rounded-full"
                 />
               </div>
               <div className="p-4">

@@ -29,9 +29,10 @@ const LearnMoreHome = () => {
             width={300}
             height={300}
             alt="Learn more about Industry 4.0 through exploration"
-            className="hidden md:block"
+            className="hidden md:block rounded-2xl"
           />
           <Image
+          className="rounded-2xl"
             src={monitor}
             width={300}
             height={300}
