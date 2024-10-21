@@ -1,8 +1,7 @@
 import Link from "next/link";
 import LinkedInIcon from "@assets/icons/linkedin.svg";
 import GitHubIcon from "@assets/icons/github.svg";
-import YouTubeIcon from "@assets/icons/youtube.svg";
-import TikTokIcon from "@assets/icons/tiktok.svg";
+import WhatsIcon from "@assets/icons/whatsapp.svg";
 import { captions } from "@locales/en/captions";
 
 const Footer = () => {
@@ -66,41 +65,24 @@ const Footer = () => {
             {captions.footer.rightsReserved}
           </p>
           <div className="mt-4 flex justify-end gap-6">
-            {/* LinkedIn */}
-            <Link
-              href="https://www.linkedin.com"
-              className="text-gray-400 hover:text-gray-300"
-              aria-label="LinkedIn"
-            >
-              <LinkedInIcon className="h-6 w-6" />
-            </Link>
-
-            {/* GitHub */}
-            <Link
-              href="https://github.com"
-              className="text-gray-400 hover:text-gray-300"
-              aria-label="GitHub"
-            >
-              <GitHubIcon className="h-6 w-6" />
-            </Link>
-
-            {/* YouTube */}
-            <Link
-              href="https://youtube.com"
-              className="text-gray-400 hover:text-gray-300"
-              aria-label="YouTube"
-            >
-              <YouTubeIcon className="h-6 w-6" />
-            </Link>
-
-            {/* TikTok */}
-            <Link
-              href="https://tiktok.com"
-              className="text-gray-400 hover:text-gray-300"
-              aria-label="TikTok"
-            >
-              <TikTokIcon className="h-6 w-6" />
-            </Link>
+            <div className="flex gap-3">
+              <Link target="_blank" href="https://wa.me/59178312525">
+                <WhatsIcon className="h-6 w-6 fill-white" />
+              </Link>
+            </div>
+            <div className="flex gap-3">
+              <Link
+                target="_blank"
+                href="https://www.linkedin.com/in/pablo-brito-jaldin-64579325b"
+              >
+                <LinkedInIcon className="h-6 w-6 fill-white" />
+              </Link>
+            </div>
+            <div className="flex gap-3">
+              <Link target="_blank" href="https://github.com/pabloBritoJal">
+                <GitHubIcon className="h-6 w-6 fill-white" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -57,10 +57,11 @@ export const captions = {
   aboutUsPage: {
     title: "About Me",
     description1:
-      "I am a software developer with a background in electromechanical engineering, passionate about technology and constantly seeking to improve my skills and grow professionally. With a strong interest in Industry 4.0 cutting-edge technologies, I always seek innovative solutions for various industries.",
+      "I am an Electromechanical Engineer and a Software Developer with a master's degree in Industry 4.0. My passion for technology drives me to continuously improve my skills and grow professionally. With a deep interest in cutting-edge Industry 4.0 technologies, I constantly seek innovative solutions for various sectors to help companies evolve.",
     description2:
-      "Currently, I offer consulting services in both Industry 4.0 and software development. With my experience in full-stack and mobile app development, I can help companies implement technological solutions that optimize processes and improve efficiency.",
-    servicesTitle: "My services include:",
+      "I currently offer services both in general software development and in creating specialized software solutions for the industry. My expertise lies in implementing technologies that help businesses optimize processes, increase efficiency, and drive digital transformation. My goal is to bridge the gap between industrial needs and technology solutions.",
+    description3:
+      "With experience in full-stack web and mobile app development, I have worked on projects ranging from customer management platforms to patient data systems. My projects leverage technologies such as React.js, Next.js, Flutter, and Node.js, focusing on delivering scalable, robust solutions for the industrial sector and beyond.",
     servicesList: [
       "Full-stack web development with React.js, Next.js, Node.js, and Django",
       "Mobile app development with Flutter",
@@ -68,13 +69,12 @@ export const captions = {
       "Industrial process optimization and automation",
       "System integration and data analysis",
     ],
-    description3:
-      "I have worked on various projects, from customer management platforms to web and mobile apps for managing patient data. I also have experience in business projects using technologies like React.js, Next.js, TypeScript, Node.js, and PostgreSQL, always focusing on delivering robust and scalable solutions in both the industrial sector and beyond.",
     contactTitle: "Contact Me",
     contactDetails: "Contact Details",
     namePlaceholder: "Enter your full name",
     emailPlaceholder: "Enter your email",
     messagePlaceholder: "Enter your message",
+    sendingMessage: "Sending...",
     sendMessage: "Send Message",
     contactMethods: {
       phone: "Phone",
@@ -83,11 +83,16 @@ export const captions = {
       facebook: "Facebook",
       linkedin: "LinkedIn",
       email: "Email",
+      github: "GitHub",
     },
     contactForm: {
       fullName: "Full Name",
       email: "Email",
       message: "Message",
+      successMessage: "Your message has been sent successfully!",
+      namePlaceholder: "Enter your full name",
+      emailPlaceholder: "Enter your email",
+      messagePlaceholder: "Enter your message",
     },
   },
   footer: {

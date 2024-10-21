@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { captions } from "@locales/en/captions";
+import React from "react";
 
 interface FilterSideProps {
+  industries: string[];
+  applications: string[];
+  technologies: string[];
   selectedFilters: {
     industries: string[];
     applications: string[];
@@ -17,6 +19,9 @@ interface FilterSideProps {
 }
 
 const FilterSide: React.FC<FilterSideProps> = ({
+  industries,
+  applications,
+  technologies,
   selectedFilters,
   setSelectedFilters,
 }) => {
@@ -31,7 +36,10 @@ const FilterSide: React.FC<FilterSideProps> = ({
           (item) => item !== filterValue
         );
       } else {
-        updatedFilters[filterType].push(filterValue);
+        updatedFilters[filterType] = [
+          ...updatedFilters[filterType],
+          filterValue,
+        ];
       }
       return updatedFilters;
     });
@@ -39,13 +47,13 @@ const FilterSide: React.FC<FilterSideProps> = ({
 
   return (
     <div>
-      <h2 className="text-lg font-bold mb-4">{captions.filterSide.title}</h2>
+      <h2 className="text-lg font-bold mb-4">Filters</h2>
 
       {/* Industry Filter */}
       <div className="mb-4">
-        <h3 className="font-semibold">{captions.filterSide.industry.title}</h3>
+        <h3 className="font-semibold">Industry</h3>
         <ul className="list-none space-y-2">
-          {captions.filterSide.industry.options.map((option, index) => (
+          {industries.map((option, index) => (
             <li key={index}>
               <input
                 type="checkbox"
@@ -62,11 +70,9 @@ const FilterSide: React.FC<FilterSideProps> = ({
 
       {/* Application Filter */}
       <div className="mb-4">
-        <h3 className="font-semibold">
-          {captions.filterSide.application.title}
-        </h3>
+        <h3 className="font-semibold">Applications</h3>
         <ul className="list-none space-y-2">
-          {captions.filterSide.application.options.map((option, index) => (
+          {applications.map((option, index) => (
             <li key={index}>
               <input
                 type="checkbox"
@@ -83,11 +89,9 @@ const FilterSide: React.FC<FilterSideProps> = ({
 
       {/* Technology Filter */}
       <div className="mb-4">
-        <h3 className="font-semibold">
-          {captions.filterSide.technology.title}
-        </h3>
+        <h3 className="font-semibold">Technologies</h3>
         <ul className="list-none space-y-2">
-          {captions.filterSide.technology.options.map((option, index) => (
+          {technologies.map((option, index) => (
             <li key={index}>
               <input
                 type="checkbox"

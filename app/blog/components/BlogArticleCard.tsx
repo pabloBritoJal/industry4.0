@@ -10,7 +10,7 @@ type BlogArticleCardProps = {
   excerpt: string;
   author: Author;
   date: string;
-  imageUrl: string;
+  category: string;
 };
 
 const BlogArticleCard = ({
@@ -18,13 +18,14 @@ const BlogArticleCard = ({
   excerpt,
   author,
   date,
-  imageUrl,
+  category,
 }: BlogArticleCardProps) => {
+  const dateString = date.slice(0, date.indexOf(' '))
   return (
     <div className="w-full h-72 lg:h-44 px-3 border-2 lg:px-6 py-3 grid grid-flow-row grid-rows-6 lg:grid-rows-5 rounded-2xl">
       <div className="flex flex-col row-span-1">
         <div>
-          <h3 className="text-lg font-bold text-green-pallet">Category</h3>
+          <h3 className="text-lg font-bold text-green-pallet">{category}</h3>
         </div>
       </div>
       <div className="flex flex-col row-span-2 lg:row-span-1">
@@ -52,7 +53,7 @@ const BlogArticleCard = ({
         </div>
         <div className="h-3/4 w-0.5 my-auto bg-gray-400"></div>
         <div className="flex text-sm font-normal items-center">
-          <p>{date}</p>
+          <p>{dateString}</p>
         </div>
       </div>
     </div>

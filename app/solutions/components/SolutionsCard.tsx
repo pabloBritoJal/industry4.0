@@ -1,10 +1,10 @@
-// components/SolutionsCard.tsx
-import { ISolutions } from "../../../types/solutionsType";
 import Image from "next/image";
+import Link from "next/link";
 import { captions } from "@locales/en/captions";
+import { IUseCase } from "../../../types/useCaseType";
 
 interface SolutionsCardProps {
-  useCase: ISolutions;
+  useCase: IUseCase;
 }
 
 const SolutionsCard: React.FC<SolutionsCardProps> = ({ useCase }) => {
@@ -12,28 +12,33 @@ const SolutionsCard: React.FC<SolutionsCardProps> = ({ useCase }) => {
     <div className="bg-white rounded-md overflow-hidden shadow-md">
       <div className="bg-white rounded-md overflow-hidden shadow-md">
         <Image
-          src={useCase.image}
+          src={useCase.seo.images[0].src}
           alt={useCase.title}
           width={500}
           height={300}
           className="w-full h-56 object-cover"
         />
       </div>
-      <div className="p-4">
-        <span className="text-xs font-bold text-gray-500 uppercase mb-2">
-          {useCase.category}
-        </span>
-        <h3 className="text-lg font-bold mb-2">{useCase.title}</h3>
-        <p className="text-gray-700 text-base mb-4">{useCase.description}</p>
+      <div className="flex flex-col justify-between p-4 h-[16rem]">
+        <div>
+          <span className="text-xs font-bold text-gray-500 uppercase mb-2">
+            {useCase.meta.keywords[0]}
+          </span>
+          <h3 className="text-lg font-bold mb-2">{useCase.title}</h3>
+          <p className="text-gray-700 text-base mb-4">
+            {useCase.meta.meta_description}
+          </p>
+        </div>
+
         <div className="flex justify-between items-center">
-          <span className="text-xs text-gray-500">{useCase.date}</span>
-          <a
-            href={useCase.url}
+          <Link
+            key={useCase.meta.url_slug}
+            href={`/solutions/${useCase.meta.url_slug}`}
             className="text-blue-500 hover:text-blue-600 font-bold"
             aria-label={`Read more about ${useCase.title}`}
           >
             {captions.solutionsPage.readMore}
-          </a>
+          </Link>
         </div>
       </div>
     </div>

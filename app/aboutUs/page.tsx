@@ -5,10 +5,8 @@ import { useEffect } from "react";
 import Image from "next/image";
 import pabloPhoto from "@assets/images/img/pabloPhoto.jpg";
 import AboutMe from "./components/AboutMe";
-import ServicesList from "./components/ServicesList";
 import ContactForm from "./components/ContactForm";
 import ContactDetails from "./components/ContactDetails";
-import { captions } from "@locales/en/captions";
 
 const AboutUsPage = () => {
   const { setPathName } = usePathNameStore((state) => state);
@@ -19,7 +17,6 @@ const AboutUsPage = () => {
 
   return (
     <div className="mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">{captions.aboutUsPage.title}</h1>
       <div className="flex flex-col md:flex-row">
         <div className="md:w-1/2 md:pr-4 mb-4 md:mb-0 mx-5 flex flex-col items-center">
           <div className="relative h-64 w-64 mb-4 mx-auto md:mx-0 rounded-full border-8 border-orange-500">
@@ -34,7 +31,6 @@ const AboutUsPage = () => {
             </div>
           </div>
           <AboutMe />
-          <ServicesList />
         </div>
         <div className="w-full md:w-1/2">
           <ContactForm />

@@ -1,9 +1,6 @@
 import energy from "@assets/images/img/smart_energy.jpg";
 import monitoring from "@assets/images/img/process_monitoring.jpg";
 import predictive from "@assets/images/img/predictive_maintenance.jpg";
-import assetsTrack from "@assets/images/img/asset_tracking.jpg";
-import coldTrack from "@assets/images/img/cold_chain_monitoring.jpg";
-import industrial from "@assets/images/img/industrial_automation.jpg";
 import { StaticImageData } from "next/image";
 
 export interface Solution {

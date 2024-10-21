@@ -16,7 +16,7 @@ const LearnMoreHome = () => {
             {captions.learnMoreHome.description}
           </p>
           <Link
-            href="/learn-more"
+            href="/solutions"
             className="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-6 rounded-full inline-block"
             aria-label="Learn more about Industry 4.0"
           >
