@@ -108,7 +108,7 @@ export const captions = {
     aboutUs: "About Me",
     aboutUsDescription:
       "Learn more about our company, what we do, and how we do it.",
-    rightsReserved: "© 2023 Pablo Brito. All rights reserved.",
+    rightsReserved: "© 2023 Pablo Brito.",
   },
   navbar: {
     logoName: "Pablo Brito",

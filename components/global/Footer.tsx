@@ -1,10 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import LinkedInIcon from "@assets/icons/linkedin.svg";
 import GitHubIcon from "@assets/icons/github.svg";
 import WhatsIcon from "@assets/icons/whatsapp.svg";
+import FitIcon from "@assets/icons/fit_logo.svg";
 import { captions } from "@locales/en/captions";
+import { useRouter } from "next/navigation";
 
 const Footer = () => {
+  const router = useRouter();
   return (
     <section className="w-full h-auto bg-black py-6 mt-24">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,6 +70,15 @@ const Footer = () => {
             {captions.footer.rightsReserved}
           </p>
           <div className="mt-4 flex justify-end gap-6">
+            <div className="flex gap-3">
+              <a
+                onClick={() => {
+                  router.push("/fitSection");
+                }}
+              >
+                <FitIcon className="h-6 w-6 fill-white" />
+              </a>
+            </div>
             <div className="flex gap-3">
               <Link target="_blank" href="https://wa.me/59178312525">
                 <WhatsIcon className="h-6 w-6 fill-white" />
