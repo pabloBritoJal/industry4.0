@@ -1,5 +1,5 @@
 export default function PropuestaIndustria40Delizia() {
-  const companyName = "Planta de helados, lácteos y jugos";
+  const companyName = "Delizia - Compañía de Alimentos Ltda.";
 
   const baseFeatures = [
     "Integración de hasta 10 puntos de datos",
@@ -27,11 +27,11 @@ export default function PropuestaIndustria40Delizia() {
   ];
 
   const setupItems = [
-    "Integración de 6 controladores Omron E5CC vía RS-485 Modbus RTU",
-    "Integración de 2 sistemas de pesaje según interfaz disponible",
+    "Integración de 6 controladores de temperatura Omron E5CC vía RS-485 Modbus RTU",
+    "Integración de 2 sistemas de pesaje con celdas de carga según interfaz disponible",
     "Integración de 1 flujómetro existente",
-    "Instalación de 1 sensor de nivel industrial",
-    "Instalación y configuración de gateway industrial",
+    "Definición técnica de instalación de sensor de nivel industrial",
+    "Definición técnica de instalación y arquitectura de gateway industrial",
     "Configuración de adquisición, normalización y envío de datos",
     "Despliegue inicial del sistema SaaS",
     "Validación de comunicación y puesta en marcha",
@@ -123,7 +123,7 @@ export default function PropuestaIndustria40Delizia() {
   ];
 
   const integrationPoints = [
-    "6 Omron E5CC",
+    "6 Controladores de temperatura",
     "2 sistemas de celdas de carga",
     "1 flujómetro",
     "1 sensor de nivel",
@@ -177,6 +177,7 @@ export default function PropuestaIndustria40Delizia() {
   const localPriceNotes = [
     "Los precios indicados son referenciales de mercado local en Bolivia y consideran escenarios de disponibilidad inmediata a través de proveedores especializados.",
     "En caso de que el cliente pueda trabajar con plazos de entrega mayores, la provisión mediante importación directa puede permitir una estructura de costos más competitiva, manteniendo compatibilidad y especificación técnica equivalente.",
+    "Los costos de instalación física y mano de obra no están incluidos en esta estimación y serán definidos en función de las condiciones reales de campo.",
   ];
 
   type PricingCardProps = {
@@ -199,7 +200,7 @@ export default function PropuestaIndustria40Delizia() {
     description: string;
     light?: boolean;
   }) => (
-    <div className="max-w-3xl">
+    <div className="w-full">
       <div
         className={`text-sm font-semibold uppercase tracking-[0.2em] ${
           light ? "text-gray-400" : "text-gray-500"
@@ -327,9 +328,7 @@ export default function PropuestaIndustria40Delizia() {
           </div>
 
           <div className="col-span-2 rounded-2xl bg-white p-3 shadow-sm">
-            <div className="mb-2 text-xs text-gray-500">
-              Histórico reciente
-            </div>
+            <div className="mb-2 text-xs text-gray-500">Histórico reciente</div>
             <div className="flex h-24 items-end gap-2">
               {[28, 36, 24, 44, 38, 52, 46, 58, 54, 62, 48, 66].map((h, i) => (
                 <div
@@ -394,9 +393,7 @@ export default function PropuestaIndustria40Delizia() {
           <div className="text-xs uppercase tracking-[0.16em] text-gray-400">
             Aplicación propuesta
           </div>
-          <p className="mt-2 text-sm leading-7 text-gray-200">
-            {item.useCase}
-          </p>
+          <p className="mt-2 text-sm leading-7 text-gray-200">{item.useCase}</p>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3">
@@ -439,11 +436,9 @@ export default function PropuestaIndustria40Delizia() {
               </h1>
 
               <p className="mt-6 max-w-3xl text-lg leading-8 text-gray-600">
-                Una ruta concreta para digitalizar la planta sin entrar en un
-                SCADA costoso. El objetivo inicial es centralizar datos
-                industriales reales usando la infraestructura existente, nuevos
-                sensores donde haga falta y una plataforma SaaS lista para
-                crecer por módulos.
+                El objetivo inicial es centralizar datos industriales reales
+                usando la infraestructura existente, nuevos sensores donde haga
+                falta y una plataforma SaaS lista para crecer por módulos.
               </p>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3">
@@ -451,7 +446,9 @@ export default function PropuestaIndustria40Delizia() {
                   <div className="text-xs uppercase tracking-[0.2em] text-gray-500">
                     Setup inicial
                   </div>
-                  <div className="mt-2 text-3xl font-extrabold orange_gradient">USD 1.650</div>
+                  <div className="mt-2 text-3xl font-extrabold orange_gradient">
+                    USD 1.650
+                  </div>
                   <div className="mt-1 text-sm text-gray-600">
                     Implementación inicial del sistema
                   </div>
@@ -461,7 +458,9 @@ export default function PropuestaIndustria40Delizia() {
                   <div className="text-xs uppercase tracking-[0.2em] text-gray-500">
                     Plan Base
                   </div>
-                  <div className="mt-2 text-3xl font-extrabold orange_gradient">USD 100</div>
+                  <div className="mt-2 text-3xl font-extrabold orange_gradient">
+                    USD 100
+                  </div>
                   <div className="mt-1 text-sm text-gray-600">
                     Suscripción mensual · hasta 10 puntos
                   </div>
@@ -471,7 +470,9 @@ export default function PropuestaIndustria40Delizia() {
                   <div className="text-xs uppercase tracking-[0.2em] text-gray-500">
                     Enfoque
                   </div>
-                  <div className="mt-2 text-3xl font-extrabold orange_gradient">No intrusivo</div>
+                  <div className="mt-2 text-3xl font-extrabold orange_gradient">
+                    No intrusivo
+                  </div>
                   <div className="mt-1 text-sm text-gray-600">
                     Sin intervenir la lógica de control existente
                   </div>
@@ -610,7 +611,7 @@ export default function PropuestaIndustria40Delizia() {
         <SectionHeader
           eyebrow="Implementación inicial"
           title="Qué se hace exactamente en el setup inicial"
-          description="El setup no cobra desarrollo de software como activo independiente. Lo que se cobra es la implementación inicial del sistema para dejar la arquitectura operativa, los puntos integrados y la plataforma funcionando para la adopción del servicio mensual."
+          description="El setup planifica y ejecuta la implementación inicial del sistema para dejar la arquitectura operativa, los puntos integrados y la plataforma funcionando para la adopción del servicio mensual."
         />
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_360px]">
@@ -634,15 +635,17 @@ export default function PropuestaIndustria40Delizia() {
             </div>
             <div className="mt-3 text-5xl font-black">USD 1.650</div>
             <p className="mt-4 text-gray-300">
-              Incluye implementación inicial del sistema para adopción del Plan
-              Base. No incluye hardware externo que deba adquirirse ni
-              desarrollos especiales fuera del alcance definido.
+              Incluye la ingeniería, configuración e implementación lógica del
+              sistema para la adopción del Plan Base. No incluye la provisión de
+              hardware ni la ejecución física de la instalación en campo, las
+              cuales podrán ser gestionadas posteriormente en base a la
+              ingeniería definida en esta etapa.
             </p>
 
             <div className="mt-6 rounded-3xl bg-white/10 p-4">
               <div className="text-sm font-semibold">Tiempo estimado</div>
               <div className="mt-2 text-gray-300">
-                10 a 15 días hábiles desde orden de proceder y disponibilidad de
+                30 a 45 días hábiles desde orden de proceder y disponibilidad de
                 acceso a equipos.
               </div>
             </div>
@@ -657,7 +660,7 @@ export default function PropuestaIndustria40Delizia() {
         </div>
       </section>
 
-      <section className="border-y border-gray-200 bg-gray-50">
+      <section className="bg-gray-50">
         <div className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-12">
           <SectionHeader
             eyebrow="Planes del sistema"
@@ -672,6 +675,7 @@ export default function PropuestaIndustria40Delizia() {
               price="USD 100"
               features={baseFeatures}
               badge="Adopción recomendada"
+              highlight
             />
 
             <PricingCard
@@ -679,7 +683,6 @@ export default function PropuestaIndustria40Delizia() {
               subtitle="Supervisión y Alertas"
               price="USD 200"
               features={operativoFeatures}
-              highlight
               badge="Siguiente evolución"
             />
 
@@ -731,10 +734,56 @@ export default function PropuestaIndustria40Delizia() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-12">
+        <div className="grid gap-8 lg:grid-cols-2">
+          <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
+              Qué incluye el Plan Base
+            </div>
+
+            <div className="mt-4 space-y-4">
+              {[
+                "Dashboard web en tiempo real con variables por tanque, proceso o equipo",
+                "Históricos con selección por rango y visualización de tendencias",
+                "Registro continuo de datos con timestamps e integridad básica",
+                "Estado de conexión de equipos y gateway",
+                "Acceso desde navegador en PC, tablet o móvil",
+              ].map((item) => (
+                <div key={item} className="flex gap-3">
+                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-black" />
+                  <p className="text-gray-700">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
+              Qué no incluye esta etapa
+            </div>
+
+            <div className="mt-4 space-y-4">
+              {[
+                "Control de procesos o modificación de la lógica existente",
+                "Desarrollos personalizados complejos fuera del alcance definido",
+                "Predicción avanzada o machine learning sin base histórica suficiente",
+                "Integraciones ERP / MES u otras plataformas en esta adopción inicial",
+                "Automatización de acciones sobre equipos desde el dashboard",
+              ].map((item) => (
+                <div key={item} className="flex gap-3">
+                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-red-500" />
+                  <p className="text-gray-700">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-12">
         <SectionHeader
           eyebrow="Vista del sistema"
-          title="Miniaturas del dashboard propuesto"
-          description="La presentación visual debe transmitir orden, visibilidad operativa y preparación para crecimiento. Estas miniaturas representan el tipo de interfaz esperada para la adopción inicial del sistema."
+          title="Dashboard industrial"
+          description="El sistema cuenta con dashboards operativos que permiten visualizar en tiempo real variables críticas de la planta, junto con históricos y estado de los equipos."
         />
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -750,9 +799,16 @@ export default function PropuestaIndustria40Delizia() {
       </section>
 
       <section className="border-y border-gray-200 bg-black text-white">
-        <div className="mt-10 rounded-3xl border border-orange-500/30 bg-orange-500/10 p-6 sm:p-10 mx-6 lg:mx-auto max-w-4xl">
+        <div className="mt-10 rounded-3xl border border-orange-500/30 bg-orange-500/10 p-6 sm:p-10 mx-6 lg:mx-auto max-w-6xl">
           <div className="text-sm uppercase tracking-[0.2em] text-orange-400">
             Inversión referencial en HARDWARE
+          </div>
+
+          <div className="mt-4 rounded-2xl bg-red-500/10 border border-red-500/30 p-4 text-sm text-gray-200">
+            La inversión en hardware corresponde únicamente a la provisión de
+            equipos. No incluye la instalación física en campo ni mano de obra
+            asociada, la cual será definida en una etapa posterior en función de
+            la ingeniería de detalle generada durante el setup inicial.
           </div>
 
           <div className="mt-2 text-3xl font-extrabold text-white">
@@ -834,48 +890,42 @@ export default function PropuestaIndustria40Delizia() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-12">
-        <div className="grid gap-8 lg:grid-cols-2">
-          <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
-              Qué incluye el Plan Base
-            </div>
-
-            <div className="mt-4 space-y-4">
-              {[
-                "Dashboard web en tiempo real con variables por tanque, proceso o equipo",
-                "Históricos con selección por rango y visualización de tendencias",
-                "Registro continuo de datos con timestamps e integridad básica",
-                "Estado de conexión de equipos y gateway",
-                "Acceso desde navegador en PC, tablet o móvil",
-              ].map((item) => (
-                <div key={item} className="flex gap-3">
-                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-black" />
-                  <p className="text-gray-700">{item}</p>
-                </div>
-              ))}
-            </div>
+      <section className="border-y border-gray-200 bg-black text-white mt-10">
+        <div className="mt-10 rounded-3xl border border-blue-500/30 bg-blue-500/10 p-6 sm:p-10 mx-6 lg:mx-auto max-w-6xl mb-10">
+          <div className="text-sm uppercase tracking-[0.2em] text-blue-400">
+            Inversión referencial en INSTALACIÓN
           </div>
 
-          <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
-              Qué no incluye esta etapa
-            </div>
+          <div className="mt-2 text-3xl font-extrabold text-white">
+            USD 1.500 – 3.000
+          </div>
 
-            <div className="mt-4 space-y-4">
-              {[
-                "Control de procesos o modificación de la lógica existente",
-                "Desarrollos personalizados complejos fuera del alcance definido",
-                "Predicción avanzada o machine learning sin base histórica suficiente",
-                "Integraciones ERP / MES u otras plataformas en esta adopción inicial",
-                "Automatización de acciones sobre equipos desde el dashboard",
-              ].map((item) => (
-                <div key={item} className="flex gap-3">
-                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-red-500" />
-                  <p className="text-gray-700">{item}</p>
-                </div>
-              ))}
-            </div>
+          <p className="mt-4 text-gray-300">
+            Estimación referencial para la ejecución física en campo de la
+            instalación, incluyendo montaje de equipos, cableado, canalización y
+            puesta en marcha.
+          </p>
+
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            {[
+              "Mano de obra técnica especializada",
+              "Tendido de cableado y canalización",
+              "Montaje de sensores y gateway",
+              "Pruebas y validación en campo",
+            ].map((item) => (
+              <div
+                key={item}
+                className="rounded-2xl bg-white/5 p-3 text-sm text-gray-200"
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 rounded-2xl bg-white/5 p-4 text-sm text-gray-300">
+            Este valor es referencial y será definido con precisión posterior al
+            setup inicial, en función de distancias reales, condiciones de
+            planta y complejidad de instalación.
           </div>
         </div>
       </section>
