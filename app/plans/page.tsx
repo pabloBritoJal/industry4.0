@@ -202,21 +202,21 @@ export default function PropuestaIndustria40Delizia() {
     <div className="max-w-3xl">
       <div
         className={`text-sm font-semibold uppercase tracking-[0.2em] ${
-          light ? "text-slate-400" : "text-slate-500"
+          light ? "text-gray-400" : "text-gray-500"
         }`}
       >
         {eyebrow}
       </div>
       <h2
-        className={`mt-3 text-4xl font-black tracking-tight ${
-          light ? "text-white" : "text-slate-950"
+        className={`mt-3 text-3xl sm:text-4xl font-black tracking-tight ${
+          light ? "text-white" : "text-black"
         }`}
       >
         {title}
       </h2>
       <p
         className={`mt-5 text-lg leading-8 ${
-          light ? "text-slate-300" : "text-slate-600"
+          light ? "text-gray-300" : "text-gray-600"
         }`}
       >
         {description}
@@ -233,21 +233,21 @@ export default function PropuestaIndustria40Delizia() {
     badge,
   }: PricingCardProps) => (
     <div
-      className={`relative overflow-hidden rounded-3xl border p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+      className={`relative overflow-hidden rounded-3xl border p-6 shadow-sm transition-all duration-300 hover:-trangray-y-1 hover:shadow-xl ${
         highlight
-          ? "border-slate-900 bg-slate-900 text-white"
-          : "border-slate-200 bg-white text-slate-900"
+          ? "border-black bg-black text-white"
+          : "border-gray-200 bg-white text-black"
       }`}
     >
       <div
         className={`pointer-events-none absolute inset-x-0 top-0 h-1 ${
-          highlight ? "bg-cyan-400" : "bg-slate-900"
+          highlight ? "bg-orange-500" : "bg-black"
         }`}
       />
       {badge ? (
         <div
           className={`mb-4 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-            highlight ? "bg-white/15 text-white" : "bg-slate-100 text-slate-700"
+            highlight ? "bg-white/15 text-white" : "bg-gray-100 text-gray-700"
           }`}
         >
           {badge}
@@ -256,21 +256,21 @@ export default function PropuestaIndustria40Delizia() {
 
       <div className="space-y-2">
         <h3 className="text-2xl font-bold">{title}</h3>
-        <p className={`${highlight ? "text-slate-300" : "text-slate-600"}`}>
+        <p className={`${highlight ? "text-gray-300" : "text-gray-600"}`}>
           {subtitle}
         </p>
       </div>
 
       <div className="mt-6 flex items-end gap-2">
         <span className="text-4xl font-extrabold">{price}</span>
-        <span className={`${highlight ? "text-slate-300" : "text-slate-500"}`}>
+        <span className={`${highlight ? "text-gray-300" : "text-gray-500"}`}>
           / mes
         </span>
       </div>
 
       <div
         className={`mt-2 text-sm ${
-          highlight ? "text-slate-300" : "text-slate-500"
+          highlight ? "text-gray-300" : "text-gray-500"
         }`}
       >
         Hasta 10 puntos incluidos. Expansión por bloques adicionales de
@@ -282,10 +282,10 @@ export default function PropuestaIndustria40Delizia() {
           <div key={feature} className="flex items-start gap-3">
             <div
               className={`mt-1 h-2.5 w-2.5 rounded-full ${
-                highlight ? "bg-white" : "bg-slate-900"
+                highlight ? "bg-white" : "bg-black"
               }`}
             />
-            <p className={`${highlight ? "text-slate-200" : "text-slate-700"}`}>
+            <p className={`${highlight ? "text-gray-200" : "text-gray-700"}`}>
               {feature}
             </p>
           </div>
@@ -303,38 +303,38 @@ export default function PropuestaIndustria40Delizia() {
     desc: string;
     accent: string;
   }) => (
-    <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+    <div className="rounded-3xl border border-gray-200 bg-white p-4 shadow-sm">
+      <div className="rounded-2xl border border-gray-100 bg-gray-50 p-4">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
-            <div className="text-sm font-semibold text-slate-900">{title}</div>
-            <div className="text-xs text-slate-500">{accent}</div>
+            <div className="text-sm font-semibold text-black">{title}</div>
+            <div className="text-xs text-gray-500">{accent}</div>
           </div>
-          <div className="rounded-full bg-emerald-100 px-2 py-1 text-xs font-medium text-emerald-700">
+          <div className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
             Online
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="rounded-2xl bg-white p-3 shadow-sm">
-            <div className="text-xs text-slate-500">Temperatura</div>
-            <div className="mt-2 text-2xl font-bold text-slate-900">4.2°C</div>
+            <div className="text-xs text-gray-500">Temperatura</div>
+            <div className="mt-2 text-2xl font-bold text-black">4.2°C</div>
           </div>
 
           <div className="rounded-2xl bg-white p-3 shadow-sm">
-            <div className="text-xs text-slate-500">Nivel / Peso</div>
-            <div className="mt-2 text-2xl font-bold text-slate-900">78%</div>
+            <div className="text-xs text-gray-500">Nivel / Peso</div>
+            <div className="mt-2 text-2xl font-bold text-black">78%</div>
           </div>
 
           <div className="col-span-2 rounded-2xl bg-white p-3 shadow-sm">
-            <div className="mb-2 text-xs text-slate-500">
+            <div className="mb-2 text-xs text-gray-500">
               Histórico reciente
             </div>
             <div className="flex h-24 items-end gap-2">
               {[28, 36, 24, 44, 38, 52, 46, 58, 54, 62, 48, 66].map((h, i) => (
                 <div
                   key={i}
-                  className="flex-1 rounded-t-xl bg-slate-900/80"
+                  className="flex-1 rounded-t-xl bg-black/80"
                   style={{ height: `${h}%` }}
                 />
               ))}
@@ -343,7 +343,7 @@ export default function PropuestaIndustria40Delizia() {
         </div>
       </div>
 
-      <p className="mt-4 text-sm text-slate-600">{desc}</p>
+      <p className="mt-4 text-sm text-gray-600">{desc}</p>
     </div>
   );
 
@@ -364,7 +364,7 @@ export default function PropuestaIndustria40Delizia() {
   }) => (
     <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm">
       <div className="border-b border-white/10 bg-white px-5 py-4">
-        <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-slate-50">
+        <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-gray-50">
           <img
             src={item.image}
             alt={item.name}
@@ -377,7 +377,7 @@ export default function PropuestaIndustria40Delizia() {
       <div className="space-y-4 p-5">
         <div className="flex flex-col gap-3">
           <div>
-            <div className="text-xs uppercase tracking-[0.18em] text-slate-400">
+            <div className="text-xs uppercase tracking-[0.18em] text-gray-400">
               {item.brand}
             </div>
             <div className="mt-1 text-xl font-bold text-white">{item.name}</div>
@@ -388,32 +388,32 @@ export default function PropuestaIndustria40Delizia() {
           </div>
         </div>
 
-        <p className="text-sm leading-7 text-slate-300">{item.detail}</p>
+        <p className="text-sm leading-7 text-gray-300">{item.detail}</p>
 
         <div className="rounded-2xl bg-white/10 p-4">
-          <div className="text-xs uppercase tracking-[0.16em] text-slate-400">
+          <div className="text-xs uppercase tracking-[0.16em] text-gray-400">
             Aplicación propuesta
           </div>
-          <p className="mt-2 text-sm leading-7 text-slate-200">
+          <p className="mt-2 text-sm leading-7 text-gray-200">
             {item.useCase}
           </p>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-2xl bg-white/10 p-3">
-            <div className="text-xs text-slate-400">Modelo</div>
+            <div className="text-xs text-gray-400">Modelo</div>
             <div className="mt-1 text-sm font-semibold text-white">
               {item.model}
             </div>
           </div>
           <div className="rounded-2xl bg-white/10 p-3">
-            <div className="text-xs text-slate-400">Disponibilidad</div>
+            <div className="text-xs text-gray-400">Disponibilidad</div>
             <div className="mt-1 text-sm font-semibold text-white">
               {item.availability}
             </div>
           </div>
           <div className="rounded-2xl bg-white/10 p-3">
-            <div className="text-xs text-slate-400">Referencia</div>
+            <div className="text-xs text-gray-400">Referencia</div>
             <div className="mt-1 text-sm font-semibold text-white">
               {item.source}
             </div>
@@ -424,21 +424,21 @@ export default function PropuestaIndustria40Delizia() {
   );
 
   return (
-    <main className="min-h-screen bg-white text-slate-900">
-      <section className="relative overflow-hidden border-b border-slate-200 bg-[radial-gradient(circle_at_top_left,_rgba(15,23,42,0.12),_transparent_38%),radial-gradient(circle_at_bottom_right,_rgba(2,132,199,0.12),_transparent_32%)]">
+    <main className="min-h-screen bg-white text-black">
+      <section className="relative overflow-hidden border-b border-gray-200 bg-[radial-gradient(circle_at_top_left,_rgba(0,0,0,0.12),_transparent_38%),radial-gradient(circle_at_bottom_right,_rgba(249,115,22,0.12),_transparent_32%)]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-12 lg:py-24">
           <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
-              <div className="inline-flex rounded-full border border-slate-300 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 backdrop-blur">
+              <div className="inline-flex rounded-full border border-gray-300 bg-white/80 px-4 py-2 text-sm font-medium text-gray-700 backdrop-blur">
                 Propuesta técnica y económica · Industria 4.0 SaaS
               </div>
 
-              <h1 className="mt-6 max-w-4xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              <h1 className="mt-6 max-w-4xl text-3xl sm:text-4xl font-black tracking-tight text-black sm:text-5xl lg:text-6xl">
                 Adopción del Plan Base para monitoreo industrial en{" "}
                 {companyName}
               </h1>
 
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-gray-600">
                 Una ruta concreta para digitalizar la planta sin entrar en un
                 SCADA costoso. El objetivo inicial es centralizar datos
                 industriales reales usando la infraestructura existente, nuevos
@@ -447,38 +447,32 @@ export default function PropuestaIndustria40Delizia() {
               </p>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                  <div className="text-xs uppercase tracking-[0.2em] text-slate-500">
+                <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                  <div className="text-xs uppercase tracking-[0.2em] text-gray-500">
                     Setup inicial
                   </div>
-                  <div className="mt-2 text-3xl font-extrabold text-slate-950">
-                    USD 1.650
-                  </div>
-                  <div className="mt-1 text-sm text-slate-600">
+                  <div className="mt-2 text-3xl font-extrabold orange_gradient">USD 1.650</div>
+                  <div className="mt-1 text-sm text-gray-600">
                     Implementación inicial del sistema
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                  <div className="text-xs uppercase tracking-[0.2em] text-slate-500">
+                <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                  <div className="text-xs uppercase tracking-[0.2em] text-gray-500">
                     Plan Base
                   </div>
-                  <div className="mt-2 text-3xl font-extrabold text-slate-950">
-                    USD 100
-                  </div>
-                  <div className="mt-1 text-sm text-slate-600">
+                  <div className="mt-2 text-3xl font-extrabold orange_gradient">USD 100</div>
+                  <div className="mt-1 text-sm text-gray-600">
                     Suscripción mensual · hasta 10 puntos
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                  <div className="text-xs uppercase tracking-[0.2em] text-slate-500">
+                <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                  <div className="text-xs uppercase tracking-[0.2em] text-gray-500">
                     Enfoque
                   </div>
-                  <div className="mt-2 text-3xl font-extrabold text-slate-950">
-                    No intrusivo
-                  </div>
-                  <div className="mt-1 text-sm text-slate-600">
+                  <div className="mt-2 text-3xl font-extrabold orange_gradient">No intrusivo</div>
+                  <div className="mt-1 text-sm text-gray-600">
                     Sin intervenir la lógica de control existente
                   </div>
                 </div>
@@ -486,17 +480,17 @@ export default function PropuestaIndustria40Delizia() {
             </div>
 
             <div className="relative">
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-2xl shadow-slate-200/60">
+              <div className="rounded-[2rem] border border-gray-200 bg-white p-5 shadow-2xl shadow-gray-200/60">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <div>
-                    <div className="text-sm font-semibold text-slate-900">
+                    <div className="text-sm font-semibold text-black">
                       Resumen ejecutivo
                     </div>
-                    <div className="text-xs text-slate-500">
+                    <div className="text-xs text-gray-500">
                       Implementación inicial + evolución modular
                     </div>
                   </div>
-                  <div className="rounded-full bg-slate-900 px-3 py-1 text-xs font-medium text-white">
+                  <div className="rounded-full bg-black px-3 py-1 text-xs font-medium text-white">
                     Fase actual
                   </div>
                 </div>
@@ -510,10 +504,10 @@ export default function PropuestaIndustria40Delizia() {
                   ].map((item) => (
                     <div
                       key={item}
-                      className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"
+                      className="flex items-start gap-3 rounded-2xl bg-gray-50 p-4"
                     >
-                      <div className="mt-1 h-2.5 w-2.5 rounded-full bg-slate-900" />
-                      <p className="text-sm text-slate-700">{item}</p>
+                      <div className="mt-1 h-2.5 w-2.5 rounded-full bg-black" />
+                      <p className="text-sm text-gray-700">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -522,10 +516,10 @@ export default function PropuestaIndustria40Delizia() {
                   {integrationPoints.map((point) => (
                     <div
                       key={point}
-                      className="rounded-2xl border border-slate-200 p-3"
+                      className="rounded-2xl border border-gray-200 p-3"
                     >
-                      <div className="text-xs text-slate-500">Integración</div>
-                      <div className="mt-1 font-semibold text-slate-900">
+                      <div className="text-xs text-gray-500">Integración</div>
+                      <div className="mt-1 font-semibold text-black">
                         {point}
                       </div>
                     </div>
@@ -542,21 +536,21 @@ export default function PropuestaIndustria40Delizia() {
           {phases.map((phase, index) => (
             <div
               key={phase.title}
-              className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+              className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm"
             >
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-sm font-bold text-white">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-black text-sm font-bold text-white">
                 0{index + 1}
               </div>
-              <h2 className="mt-4 text-2xl font-bold text-slate-950">
+              <h2 className="mt-4 text-2xl font-bold text-black">
                 {phase.title}
               </h2>
-              <p className="mt-3 text-slate-600">{phase.desc}</p>
+              <p className="mt-3 text-gray-600">{phase.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-50">
+      <section className="border-y border-gray-200 bg-gray-50">
         <div className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-12">
           <SectionHeader
             eyebrow="Problema y propuesta"
@@ -565,8 +559,8 @@ export default function PropuestaIndustria40Delizia() {
           />
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-              <div className="text-lg font-bold text-slate-950">
+            <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-200">
+              <div className="text-lg font-bold text-black">
                 Qué resolvemos desde el inicio
               </div>
 
@@ -579,16 +573,16 @@ export default function PropuestaIndustria40Delizia() {
                 ].map((item) => (
                   <div
                     key={item}
-                    className="flex gap-3 rounded-2xl bg-slate-50 p-4"
+                    className="flex gap-3 rounded-2xl bg-gray-50 p-4"
                   >
-                    <div className="mt-1 h-2.5 w-2.5 rounded-full bg-rose-500" />
-                    <p className="text-slate-700">{item}</p>
+                    <div className="mt-1 h-2.5 w-2.5 rounded-full bg-red-500" />
+                    <p className="text-gray-700">{item}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-3xl bg-slate-900 p-6 text-white shadow-sm">
+            <div className="rounded-3xl bg-black p-6 text-white shadow-sm">
               <div className="text-lg font-bold">Qué implementamos</div>
 
               <div className="mt-5 space-y-3">
@@ -603,7 +597,7 @@ export default function PropuestaIndustria40Delizia() {
                     className="flex gap-3 rounded-2xl bg-white/10 p-4"
                   >
                     <div className="mt-1 h-2.5 w-2.5 rounded-full bg-white" />
-                    <p className="text-slate-100">{item}</p>
+                    <p className="text-gray-100">{item}</p>
                   </div>
                 ))}
               </div>
@@ -624,22 +618,22 @@ export default function PropuestaIndustria40Delizia() {
             {setupItems.map((item) => (
               <div
                 key={item}
-                className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
+                className="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm"
               >
-                <div className="mb-3 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                <div className="mb-3 inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
                   Incluido
                 </div>
-                <p className="text-slate-800">{item}</p>
+                <p className="text-gray-800">{item}</p>
               </div>
             ))}
           </div>
 
-          <div className="rounded-[2rem] border border-slate-900 bg-slate-900 p-6 text-white shadow-xl">
-            <div className="text-sm uppercase tracking-[0.2em] text-slate-400">
+          <div className="rounded-[2rem] border border-black bg-black p-6 text-white shadow-xl">
+            <div className="text-sm uppercase tracking-[0.2em] text-gray-400">
               Inversión inicial
             </div>
             <div className="mt-3 text-5xl font-black">USD 1.650</div>
-            <p className="mt-4 text-slate-300">
+            <p className="mt-4 text-gray-300">
               Incluye implementación inicial del sistema para adopción del Plan
               Base. No incluye hardware externo que deba adquirirse ni
               desarrollos especiales fuera del alcance definido.
@@ -647,7 +641,7 @@ export default function PropuestaIndustria40Delizia() {
 
             <div className="mt-6 rounded-3xl bg-white/10 p-4">
               <div className="text-sm font-semibold">Tiempo estimado</div>
-              <div className="mt-2 text-slate-300">
+              <div className="mt-2 text-gray-300">
                 10 a 15 días hábiles desde orden de proceder y disponibilidad de
                 acceso a equipos.
               </div>
@@ -655,7 +649,7 @@ export default function PropuestaIndustria40Delizia() {
 
             <div className="mt-4 rounded-3xl bg-white/10 p-4">
               <div className="text-sm font-semibold">Forma de pago</div>
-              <div className="mt-2 text-slate-300">
+              <div className="mt-2 text-gray-300">
                 50% al inicio · 50% con sistema operativo y entregado.
               </div>
             </div>
@@ -663,7 +657,7 @@ export default function PropuestaIndustria40Delizia() {
         </div>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-50">
+      <section className="border-y border-gray-200 bg-gray-50">
         <div className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-12">
           <SectionHeader
             eyebrow="Planes del sistema"
@@ -698,11 +692,11 @@ export default function PropuestaIndustria40Delizia() {
             />
           </div>
 
-          <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="text-lg font-bold text-slate-950">
+          <div className="mt-8 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="text-lg font-bold text-black">
               Política de capacidad
             </div>
-            <p className="mt-3 text-slate-600">
+            <p className="mt-3 text-gray-600">
               Cada plan incluye hasta 10 puntos de datos. Si la planta requiere
               mayor cobertura, la capacidad se amplía mediante bloques
               adicionales. Esto evita costos innecesarios al inicio y permite un
@@ -721,12 +715,12 @@ export default function PropuestaIndustria40Delizia() {
                   value: "+USD 100 / bloque adicional",
                 },
               ].map((item) => (
-                <div key={item.label} className="rounded-2xl bg-slate-50 p-4">
-                  <div className="text-sm text-slate-500">{item.label}</div>
-                  <div className="mt-1 text-lg font-bold text-slate-950">
+                <div key={item.label} className="rounded-2xl bg-gray-50 p-4">
+                  <div className="text-sm text-gray-500">{item.label}</div>
+                  <div className="mt-1 text-lg font-bold text-black">
                     {item.value}
                   </div>
-                  <div className="mt-1 text-sm text-slate-600">
+                  <div className="mt-1 text-sm text-gray-600">
                     Bloque adicional de hasta 10 puntos
                   </div>
                 </div>
@@ -755,9 +749,9 @@ export default function PropuestaIndustria40Delizia() {
         </div>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-950 text-white">
-        <div className="mt-10 rounded-3xl border border-cyan-400/30 bg-cyan-400/10 p-6 mx-56">
-          <div className="text-sm uppercase tracking-[0.2em] text-cyan-300">
+      <section className="border-y border-gray-200 bg-black text-white">
+        <div className="mt-10 rounded-3xl border border-orange-500/30 bg-orange-500/10 p-6 sm:p-10 mx-6 lg:mx-auto max-w-4xl">
+          <div className="text-sm uppercase tracking-[0.2em] text-orange-400">
             Inversión referencial en HARDWARE
           </div>
 
@@ -765,7 +759,7 @@ export default function PropuestaIndustria40Delizia() {
             USD 2.000 – 3.600
           </div>
 
-          <p className="mt-4 text-slate-300">
+          <p className="mt-4 text-gray-300">
             Estimación de inversión en hardware para una adopción inicial de
             hasta 10 puntos de datos, considerando gateway industrial, sensor de
             nivel, interfaces de integración y cableado.
@@ -781,14 +775,14 @@ export default function PropuestaIndustria40Delizia() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-2xl bg-white/5 p-3 text-sm text-slate-200"
+                className="rounded-2xl bg-white/5 p-3 text-sm text-gray-200"
               >
                 {item}
               </div>
             ))}
           </div>
 
-          <div className="mt-6 rounded-2xl bg-white/5 p-4 text-sm text-slate-300">
+          <div className="mt-6 rounded-2xl bg-white/5 p-4 text-sm text-gray-300">
             El valor final será definido con precisión posterior al setup
             inicial, etapa en la cual se validan en campo las condiciones reales
             de instalación, la selección óptima de sensores (ultrasonido o
@@ -807,7 +801,7 @@ export default function PropuestaIndustria40Delizia() {
             {architecturePillars.map((item) => (
               <div
                 key={item}
-                className="rounded-2xl bg-white/10 p-4 text-slate-100"
+                className="rounded-2xl bg-white/10 p-4 text-gray-100"
               >
                 {item}
               </div>
@@ -831,8 +825,8 @@ export default function PropuestaIndustria40Delizia() {
                   key={note}
                   className="flex gap-3 rounded-2xl bg-white/5 p-4"
                 >
-                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-cyan-400" />
-                  <p className="text-slate-300">{note}</p>
+                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-orange-500" />
+                  <p className="text-gray-300">{note}</p>
                 </div>
               ))}
             </div>
@@ -842,8 +836,8 @@ export default function PropuestaIndustria40Delizia() {
 
       <section className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-12">
         <div className="grid gap-8 lg:grid-cols-2">
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+          <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
               Qué incluye el Plan Base
             </div>
 
@@ -856,15 +850,15 @@ export default function PropuestaIndustria40Delizia() {
                 "Acceso desde navegador en PC, tablet o móvil",
               ].map((item) => (
                 <div key={item} className="flex gap-3">
-                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-slate-900" />
-                  <p className="text-slate-700">{item}</p>
+                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-black" />
+                  <p className="text-gray-700">{item}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-8 shadow-sm">
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+          <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
               Qué no incluye esta etapa
             </div>
 
@@ -877,8 +871,8 @@ export default function PropuestaIndustria40Delizia() {
                 "Automatización de acciones sobre equipos desde el dashboard",
               ].map((item) => (
                 <div key={item} className="flex gap-3">
-                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-rose-500" />
-                  <p className="text-slate-700">{item}</p>
+                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-red-500" />
+                  <p className="text-gray-700">{item}</p>
                 </div>
               ))}
             </div>
@@ -886,21 +880,21 @@ export default function PropuestaIndustria40Delizia() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 bg-slate-50">
+      <section className="border-t border-gray-200 bg-gray-50">
         <div className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-12">
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-lg">
+          <div className="rounded-[2rem] border border-gray-200 bg-white p-8 shadow-lg">
             <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-center">
               <div>
-                <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
                   Cierre de propuesta
                 </div>
 
-                <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+                <h2 className="mt-3 text-3xl sm:text-4xl font-black tracking-tight text-black">
                   La recomendación es adoptar el Plan Base y construir desde
                   ahí.
                 </h2>
 
-                <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+                <p className="mt-5 max-w-3xl text-lg leading-8 text-gray-600">
                   Esta es la ruta más razonable en costo, tiempo y riesgo.
                   Permite a la planta empezar a medir de verdad, centralizar
                   información crítica y preparar una evolución ordenada hacia
@@ -909,25 +903,25 @@ export default function PropuestaIndustria40Delizia() {
                 </p>
               </div>
 
-              <div className="rounded-3xl bg-slate-900 p-6 text-white">
-                <div className="text-sm uppercase tracking-[0.2em] text-slate-400">
+              <div className="rounded-3xl bg-black p-6 text-white">
+                <div className="text-sm uppercase tracking-[0.2em] text-gray-400">
                   Resumen comercial
                 </div>
 
                 <div className="mt-4 space-y-4">
                   <div>
-                    <div className="text-sm text-slate-400">Setup inicial</div>
+                    <div className="text-sm text-gray-400">Setup inicial</div>
                     <div className="text-3xl font-extrabold">USD 1.650</div>
                   </div>
 
                   <div>
-                    <div className="text-sm text-slate-400">
+                    <div className="text-sm text-gray-400">
                       Suscripción mensual
                     </div>
                     <div className="text-3xl font-extrabold">USD 100</div>
                   </div>
 
-                  <div className="rounded-2xl bg-white/10 p-4 text-sm text-slate-300">
+                  <div className="rounded-2xl bg-white/10 p-4 text-sm text-gray-300">
                     Plan Base · hasta 10 puntos · expansión modular por bloques.
                   </div>
                 </div>
