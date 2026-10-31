@@ -1,193 +1,27 @@
 "use client";
 
 import { useEffect, useId, useState, type CSSProperties } from "react";
+import {
+  DAYS,
+  EXERCISES,
+  IMAGE_BASE,
+  STORAGE_KEY,
+  type DayKey,
+  type ExerciseKey,
+  type Journal,
+  type Prescription,
+  type SetLog,
+  type WorkoutLog,
+} from "./data";
+import { STYLES } from "./styles";
+import {
+  findPrevious,
+  formatPrevious,
+  shortDate,
+  suggestion,
+  type Previous,
+} from "./progress";
 
-// Reemplazo completo de app/page.tsx. Solo requiere React y Next.js.
-type DayKey = "A" | "B" | "C";
-type ExerciseKey = keyof typeof EXERCISES;
-type SetLog = { kg: string; reps: string; done: boolean };
-type WorkoutLog = Record<string, [SetLog, SetLog]>;
-type Journal = Record<string, WorkoutLog>;
-const STORAGE_KEY = "pablo-fullbody-v1";
-const IMAGE_BASE =
-  "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/";
-
-const EXERCISES = {
-  dips: {
-    name: "Fondos en paralelas",
-    target: "Pecho · tríceps",
-    image: "Dips_-_Chest_Version",
-    cue: "Baja con control hasta una profundidad cómoda para tus hombros. Usa asistencia o lastre para alcanzar el rango indicado.",
-    note: "Registra lastre con signo + y asistencia con signo −. Con tu peso corporal, escribe 0.",
-  },
-  curl: {
-    name: "Curl femoral sentado",
-    target: "Isquiotibiales",
-    image: "Seated_Leg_Curl",
-    cue: "Ajusta el eje de la máquina a tu rodilla. Mantén la pelvis apoyada y controla el regreso.",
-    note: "Elige una carga que permita completar todo el recorrido cómodo.",
-  },
-  press: {
-    name: "Prensa de piernas",
-    target: "Cuádriceps · glúteos",
-    image: "Leg_Press",
-    cue: "Mantén la espalda y la pelvis apoyadas. Baja sin despegar la cadera y empuja sin rebotes.",
-    note: "Usa la misma máquina y posición de pies para comparar cargas.",
-  },
-  row: {
-    name: "Remo con pecho apoyado",
-    target: "Espalda media · dorsales",
-    image: "Lying_T-Bar_Row",
-    cue: "Mantén el pecho en el apoyo. Lleva los codos hacia atrás sin levantar los hombros ni tirar con el cuello.",
-    note: "Puedes usar una máquina de remo con apoyo de pecho equivalente.",
-  },
-  incline: {
-    name: "Press inclinado con mancuernas",
-    target: "Pecho superior · tríceps",
-    image: "Incline_Dumbbell_Press",
-    cue: "Mantén las escápulas estables y las muñecas sobre los codos. Baja de forma controlada.",
-    note: "Anota el peso de una mancuerna y conserva ese criterio en tus registros.",
-  },
-  calves: {
-    name: "Elevación de pantorrillas",
-    target: "Pantorrillas",
-    image: "Seated_Calf_Raise",
-    cue: "Recorre el rango cómodo completo. Haz una breve pausa arriba y abajo, sin rebotar.",
-    note: "Mantén la misma variante de máquina para medir el progreso.",
-  },
-  extension: {
-    name: "Extensión de cuádriceps",
-    target: "Cuádriceps",
-    image: "Leg_Extensions",
-    cue: "Alinea la rodilla con el eje de la máquina. Extiende con control y evita lanzar la carga.",
-    note: "Mantén la cadera apoyada durante toda la serie.",
-  },
-  lateral: {
-    name: "Elevaciones laterales",
-    target: "Hombro lateral",
-    image: "Side_Lateral_Raise",
-    cue: "Eleva los brazos hasta una altura cómoda cercana a los hombros. Evita impulsarte con el tronco.",
-    note: "Con mancuernas, registra el peso de una sola.",
-  },
-  thrust: {
-    name: "Hip thrust en máquina",
-    target: "Glúteos",
-    image: "Barbell_Hip_Thrust",
-    cue: "Sube extendiendo la cadera. Contrae glúteos arriba sin arquear la espalda.",
-    note: "Las imágenes muestran la variante con barra. Prioriza máquina; puedes usar puente de glúteo con carga.",
-  },
-  face: {
-    name: "Face pull",
-    target: "Hombro posterior · espalda alta",
-    image: "Face_Pull",
-    cue: "Lleva la cuerda hacia la cara con control. Mantén el tronco estable y evita encoger el cuello.",
-    note: "Prioriza un recorrido controlado antes de aumentar la carga.",
-  },
-  pulldown: {
-    name: "Jalón al pecho",
-    target: "Dorsales · bíceps",
-    image: "Wide-Grip_Lat_Pulldown",
-    cue: "Lleva los codos hacia abajo. Acerca la barra al pecho sin balancearte ni llevarla detrás de la cabeza.",
-    note: "Utiliza un agarre cómodo y conserva la misma variante.",
-  },
-  shoulder: {
-    name: "Press militar en máquina",
-    target: "Hombros · tríceps",
-    image: "Leverage_Shoulder_Press",
-    cue: "Ajusta el asiento y mantén la espalda apoyada. Empuja sin arquear la zona lumbar.",
-    note: "La profundidad debe ser cómoda para el hombro.",
-  },
-  adductor: {
-    name: "Aductores en máquina",
-    target: "Cara interna del muslo",
-    image: "Thigh_Adductor",
-    cue: "Cierra las piernas de forma controlada. Regresa sin dejar caer la carga ni forzar la apertura.",
-    note: "Ajusta el rango a una posición cómoda de cadera.",
-  },
-  crunch: {
-    name: "Crunch abdominal en polea",
-    target: "Abdominales",
-    image: "Cable_Crunch",
-    cue: "Acerca las costillas a la pelvis. Mantén la cadera relativamente estable y evita tirar solo con los brazos.",
-    note: "También puedes usar una máquina de crunch abdominal.",
-  },
-  biceps: {
-    name: "Curl de bíceps con mancuernas",
-    target: "Bíceps",
-    image: "Dumbbell_Bicep_Curl",
-    cue: "Mantén los codos estables y controla la bajada. Evita impulsarte con el tronco.",
-    note: "Registra el peso de una mancuerna.",
-  },
-} as const;
-
-type Prescription = { id: ExerciseKey; reps: string };
-type Day = {
-  key: DayKey;
-  weekday: string;
-  title: string;
-  description: string;
-  accent: string;
-  exercises: Prescription[];
-};
-const DAYS: Day[] = [
-  {
-    key: "A",
-    weekday: "Lunes",
-    title: "Construye tu fuerza.",
-    description: "Más carga en fondos y prensa. Control en cada repetición.",
-    accent: "#c6f36b",
-    exercises: [
-      { id: "dips", reps: "6–8" },
-      { id: "curl", reps: "10–15" },
-      { id: "press", reps: "6–10" },
-      { id: "row", reps: "6–10" },
-      { id: "incline", reps: "8–12" },
-      { id: "calves", reps: "10–20" },
-      { id: "extension", reps: "10–15" },
-      { id: "lateral", reps: "12–20" },
-      { id: "thrust", reps: "8–12" },
-      { id: "face", reps: "12–20" },
-    ],
-  },
-  {
-    key: "B",
-    weekday: "Miércoles",
-    title: "Espalda y hombros.",
-    description: "Tirón vertical, press militar y trabajo completo de piernas.",
-    accent: "#a9caff",
-    exercises: [
-      { id: "dips", reps: "8–12" },
-      { id: "curl", reps: "10–15" },
-      { id: "press", reps: "10–15" },
-      { id: "pulldown", reps: "8–12" },
-      { id: "shoulder", reps: "8–12" },
-      { id: "calves", reps: "10–20" },
-      { id: "extension", reps: "10–15" },
-      { id: "lateral", reps: "12–20" },
-      { id: "adductor", reps: "12–20" },
-      { id: "crunch", reps: "10–20" },
-    ],
-  },
-  {
-    key: "C",
-    weekday: "Viernes",
-    title: "Completa la semana.",
-    description: "Énfasis en pecho y espalda, con glúteos y bíceps al cierre.",
-    accent: "#d5b4ff",
-    exercises: [
-      { id: "dips", reps: "10–15" },
-      { id: "curl", reps: "10–15" },
-      { id: "press", reps: "8–12" },
-      { id: "row", reps: "8–12" },
-      { id: "incline", reps: "8–12" },
-      { id: "calves", reps: "10–20" },
-      { id: "pulldown", reps: "8–12" },
-      { id: "lateral", reps: "12–20" },
-      { id: "thrust", reps: "10–15" },
-      { id: "biceps", reps: "10–15" },
-    ],
-  },
-];
 
 function todayLocal() {
   const now = new Date();
@@ -326,12 +160,14 @@ function ExerciseRow({
   item,
   index,
   sets,
+  previous,
   onUpdate,
   onRest,
 }: {
   item: Prescription;
   index: number;
   sets: [SetLog, SetLog];
+  previous: Previous | null;
   onUpdate: (set: 0 | 1, patch: Partial<SetLog>) => void;
   onRest: (seconds: number) => void;
 }) {
@@ -339,6 +175,8 @@ function ExerciseRow({
   const detailsId = useId();
   const exercise = EXERCISES[item.id];
   const complete = sets.every((set) => set.done);
+  const tip = suggestion(previous, item.reps);
+  const isEmpty = sets.every((set) => !set.kg && !set.reps);
   return (
     <article className={`fb-exercise${complete ? " is-complete" : ""}`}>
       <div className="fb-exercise-main">
@@ -366,6 +204,26 @@ function ExerciseRow({
           <small>series × repeticiones</small>
         </div>
       </div>
+      {previous && (
+        <div className="fb-previous">
+          <span>
+            Última vez · {shortDate(previous.date)}: {formatPrevious(previous)}
+          </span>
+          {isEmpty && (
+            <button
+              type="button"
+              onClick={() =>
+                previous.sets.forEach((set, i) =>
+                  onUpdate(i as 0 | 1, { kg: set.kg, reps: set.reps }),
+                )
+              }
+            >
+              Repetir
+            </button>
+          )}
+          {tip && <strong>{tip}</strong>}
+        </div>
+      )}
       <div className="fb-set-grid">
         {sets.map((set, setIndex) => (
           <div className={`fb-set${set.done ? " is-done" : ""}`} key={setIndex}>
@@ -454,6 +312,7 @@ export default function FitnessPlanPage() {
   const [remaining, setRemaining] = useState(0);
   const [restFinished, setRestFinished] = useState(false);
   const [pendingReset, setPendingReset] = useState(false);
+  const [autoRest, setAutoRest] = useState(true);
   const [saveLabel, setSaveLabel] = useState("Preparando registro…");
 
   useEffect(() => {
@@ -475,6 +334,23 @@ export default function FitnessPlanPage() {
     }
   }, [journal, ready, storageError]);
   useEffect(() => {
+    // Pide al navegador no borrar estos datos al liberar espacio.
+    navigator.storage?.persist?.().catch(() => {});
+  }, []);
+  useEffect(() => {
+    // Mantiene la pantalla encendida mientras entrenas.
+    let lock: WakeLockSentinel | null = null;
+    const request = () =>
+      navigator.wakeLock?.request("screen").then((l) => (lock = l), () => {});
+    request();
+    const onVisible = () => document.visibilityState === "visible" && request();
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      lock?.release().catch(() => {});
+    };
+  }, []);
+  useEffect(() => {
     setPendingReset(false);
   }, [activeDay, date]);
   useEffect(() => {
@@ -485,6 +361,7 @@ export default function FitnessPlanPage() {
       if (value === 0) {
         setRestEnd(null);
         setRestFinished(true);
+        navigator.vibrate?.([200, 100, 200]);
       }
     };
     tick();
@@ -503,6 +380,7 @@ export default function FitnessPlanPage() {
   const progress = (completed / 20) * 100;
   const update = (id: ExerciseKey, set: 0 | 1, patch: Partial<SetLog>) => {
     if (!ready || !date) return;
+    if (autoRest && patch.done === true) startRest(90);
     setJournal((current) => {
       const workout = current[sessionKey] ?? {};
       const sets: [SetLog, SetLog] = [
@@ -524,6 +402,26 @@ export default function FitnessPlanPage() {
       return next;
     });
     setPendingReset(false);
+  };
+  const backupJournal = () => {
+    const url = URL.createObjectURL(
+      new Blob([JSON.stringify(journal)], { type: "application/json" }),
+    );
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `respaldo-fullbody-${todayLocal()}.json`;
+    anchor.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+  const restoreJournal = async (file: File | undefined) => {
+    if (!file) return;
+    try {
+      const restored = parseJournal(await file.text());
+      setJournal((current) => ({ ...current, ...restored }));
+      setSaveLabel("Respaldo restaurado");
+    } catch {
+      setSaveLabel("No se pudo leer el respaldo");
+    }
   };
   const exportJournal = () => {
     const rows = ["fecha,dia,ejercicio,serie,carga_kg,repeticiones,completada"];
@@ -669,8 +567,22 @@ export default function FitnessPlanPage() {
             onClick={exportJournal}
             disabled={!ready}
           >
-            Exportar registro <Arrow />
+            CSV <Arrow />
           </button>
+          <button type="button" onClick={backupJournal} disabled={!ready}>
+            Respaldo
+          </button>
+          <label className="fb-restore">
+            Restaurar
+            <input
+              type="file"
+              accept="application/json,.json"
+              onChange={(event) => {
+                restoreJournal(event.target.files?.[0]);
+                event.target.value = "";
+              }}
+            />
+          </label>
         </nav>
 
         {view === "routine" ? (
@@ -752,6 +664,12 @@ export default function FitnessPlanPage() {
                             item={item}
                             index={pair * 2 + offset}
                             sets={session[item.id] ?? [emptySet(), emptySet()]}
+                            previous={findPrevious(
+                              journal,
+                              date,
+                              activeDay,
+                              item.id,
+                            )}
                             onUpdate={(set, patch) =>
                               update(item.id, set, patch)
                             }
@@ -858,6 +776,14 @@ export default function FitnessPlanPage() {
                       </button>
                     ))}
                   </div>
+                  <label className="fb-auto-rest">
+                    <input
+                      type="checkbox"
+                      checked={autoRest}
+                      onChange={(event) => setAutoRest(event.target.checked)}
+                    />
+                    Iniciar 90 s al completar una serie
+                  </label>
                   {restEnd !== null && (
                     <button
                       type="button"
@@ -1033,13 +959,3 @@ export default function FitnessPlanPage() {
   );
 }
 
-const STYLES = `
-.fb-app{--accent:#c6f36b;--bg:#0c0e0c;--panel:#141714;--border:#2b302b;--muted:#a3aaa1;min-height:100vh;background:var(--bg);color:#f0f1ea;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5;color-scheme:dark;padding:0 28px;isolation:isolate}
-.fb-app *{box-sizing:border-box}.fb-app button,.fb-app input{font:inherit}.fb-app button,.fb-app a,.fb-app input{touch-action:manipulation}.fb-app button{cursor:pointer;color:inherit}.fb-app button:disabled{opacity:.4;cursor:default}.fb-app button:focus-visible,.fb-app a:focus-visible,.fb-app input:focus-visible{outline:2px solid var(--accent);outline-offset:4px}.fb-app a{color:inherit}.fb-app p,.fb-app h1,.fb-app h2,.fb-app h3,.fb-app figure{margin:0}.fb-app button{border:0;background:none}.fb-shell{max-width:1320px;margin:0 auto}.fb-topbar{min-height:91px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);gap:20px}.fb-brand{display:flex;align-items:center;gap:13px;font-size:14px;font-weight:800;letter-spacing:.13em;text-decoration:none}.fb-brand-symbol{display:grid;place-items:center;background:var(--accent);color:#17200e;width:34px;height:34px;border-radius:9px;font-size:27px;font-weight:900;letter-spacing:-.1em;padding-right:4px}.fb-brand-tag{color:var(--muted);font-size:11px;font-weight:500;letter-spacing:.12em}.fb-topbar-right{display:flex;align-items:center;gap:9px;font-size:10px;color:var(--muted);letter-spacing:.15em}.fb-status-dot,.fb-idle-dot{height:6px;width:6px;display:inline-block;border-radius:50%;background:var(--accent);flex-shrink:0}.fb-idle-dot{background:#666}.fb-hero{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;padding:62px 0 50px;scroll-margin-top:20px}.fb-eyebrow{font-size:10px;font-weight:700;letter-spacing:.17em;color:var(--muted)}.fb-hero .fb-eyebrow{color:var(--accent);display:flex;align-items:center;gap:8px}.fb-hero .fb-eyebrow>span{height:5px;width:5px;background:var(--accent);border-radius:50%}.fb-hero h1{font-size:clamp(48px,5.7vw,79px);line-height:1.03;letter-spacing:-.055em;font-weight:800;margin:22px 0}.fb-hero h1 em{font-style:normal;color:var(--accent)}.fb-hero-description{max-width:445px;font-size:15px;line-height:1.8;color:var(--muted)}.fb-hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}.fb-hero-tags span{padding:5px 10px;border:1px solid #343a30;border-radius:5px;font-size:10px;color:#c8cebf}.fb-hero-aside{position:relative;display:flex;justify-content:flex-end;flex-direction:column;overflow:hidden;padding:24px 28px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(145deg,#1a2016,#101310);min-height:285px}.fb-hero-outline{position:absolute;right:20px;top:-104px;font-size:350px;line-height:1.1;font-weight:900;letter-spacing:-.08em;color:transparent;-webkit-text-stroke:1px #3d4a30;opacity:.7;pointer-events:none}.fb-hero-aside-label{position:relative;font-size:9px;letter-spacing:.15em;color:#b8c1ae;margin-bottom:14px}.fb-week-strip{position:relative;display:flex;gap:7px;justify-content:space-between}.fb-week-strip>span{display:flex;flex:1;align-items:center;flex-direction:column;gap:6px;padding:11px 0 8px;border:1px solid #343b2c;background:#161a14;border-radius:6px;color:#8d9685;font-size:11px}.fb-week-strip small{font-size:10px}.fb-week-strip>span.is-training{border-color:var(--accent);background:var(--accent);color:#14200c;font-weight:800}.fb-hero-aside>p{position:relative;margin-top:17px;color:var(--muted);font-size:11px;line-height:1.8}.fb-stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:10px;background:#121512}.fb-stats>div{display:flex;align-items:center;gap:15px;padding:24px 27px;border-right:1px solid var(--border)}.fb-stats>div:last-child{border:0}.fb-stats strong{font-size:35px;font-weight:500;line-height:1;letter-spacing:-.06em}.fb-stats span{max-width:90px;font-size:11px;color:var(--muted)}.fb-view-nav{display:flex;align-items:center;gap:30px;border-bottom:1px solid var(--border);margin-top:29px}.fb-view-nav>button{position:relative;padding:18px 0;font-size:12px;color:var(--muted)}.fb-view-nav>button.is-active{color:#f1f2eb}.fb-view-nav>button.is-active:after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--accent)}.fb-view-nav button>span{font-size:9px;color:#89947d;padding-left:7px}.fb-view-nav .fb-export{display:flex;align-items:center;gap:9px;margin-left:auto;font-size:11px}.fb-day-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:29px 0 36px}.fb-day-tabs>button{display:flex;align-items:center;gap:15px;background:#131613;border:1px solid var(--border);border-radius:8px;padding:17px 19px;text-align:left;transition:border-color .15s,background .15s}.fb-day-tabs>button:hover{border-color:#647258}.fb-day-tabs>button.is-active{border-color:var(--accent);background:#1b2315}.fb-day-letter{display:grid;place-items:center;width:35px;height:38px;border:1px solid #394033;border-radius:5px;color:#c6cebc;font-size:19px}.fb-day-tabs .is-active .fb-day-letter{background:var(--accent);color:#15200d;border-color:var(--accent)}.fb-day-tabs button>span:nth-child(2){display:flex;flex-direction:column}.fb-day-tabs strong{font-size:12px}.fb-day-tabs small{font-size:10px;color:var(--muted);margin-top:2px}.fb-day-tabs svg{margin-left:auto;color:var(--muted)}.fb-workout-layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:30px;align-items:start}.fb-workout-header{display:flex;align-items:center;justify-content:space-between;gap:20px}.fb-workout-header h2{font-size:30px;letter-spacing:-.035em;line-height:1.2;margin:8px 0 9px}.fb-workout-header>div>p:last-child{font-size:12px;color:var(--muted)}.fb-date{display:flex;flex-direction:column;gap:6px;flex-shrink:0;font-size:9px;color:var(--muted)}.fb-date input{min-height:38px;max-width:155px;border:1px solid var(--border);border-radius:5px;background:#151915;color:#e0e5d9;padding:7px 9px;font-size:11px}.fb-warmup{margin:23px 0 24px;display:flex;gap:13px;padding:15px 17px;background:#171c13;border:1px solid #303d22;border-radius:7px}.fb-warmup>span{color:var(--accent);font-size:22px;line-height:1}.fb-warmup strong{font-size:11px;color:#d6e6bc}.fb-warmup p{font-size:11px;color:#a9b59b;line-height:1.8;margin-top:4px}.fb-pair-explanation{display:flex;justify-content:space-between;gap:10px;font-size:10px;margin-bottom:18px;color:var(--muted)}.fb-pair-explanation strong{color:#c9d0c3}.fb-pair{margin-bottom:20px;border:1px solid var(--border);border-radius:9px;overflow:hidden;background:#121512}.fb-pair-heading{display:flex;justify-content:space-between;padding:10px 15px;background:#1c2119;color:#b7c2aa;font-size:9px;letter-spacing:.11em}.fb-pair-heading>span:last-child{color:#929e85;letter-spacing:.02em}.fb-exercise{padding:19px 18px}.fb-exercise+.fb-exercise{border-top:1px solid var(--border)}.fb-exercise.is-complete{background:#172012}.fb-exercise-main{display:flex;align-items:center;gap:15px}.fb-exercise-number{font-size:12px;font-variant-numeric:tabular-nums;color:#859279;min-width:23px}.is-complete .fb-exercise-number{color:var(--accent)}.fb-exercise-heading{display:flex;align-items:flex-start;flex:1;min-width:0;flex-direction:column;text-align:left;padding:0}.fb-muscle{font-size:9px;color:#9caa8f;letter-spacing:.04em}.fb-exercise-name{font-size:15px;font-weight:600;line-height:1.4;margin:4px 0}.fb-details-link{font-size:9px;color:#8e9985;display:flex;gap:8px;align-items:center}.fb-details-link>span{font-size:13px;color:var(--accent)}.fb-prescription{text-align:right;flex-shrink:0}.fb-prescription strong{font-size:17px;font-weight:500;font-variant-numeric:tabular-nums}.fb-prescription strong span{font-size:12px;color:#7e8a74;margin:0 3px}.fb-prescription small{display:block;color:#89957f;font-size:8px;margin-top:3px}.fb-set-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:17px 0 0 38px}.fb-set{display:flex;align-items:center;gap:7px;min-width:0;border:1px solid #30372b;border-radius:6px;padding:6px 7px;background:#0e120d}.fb-set-label{font-size:9px;color:#98a88a;min-width:16px}.fb-set label{display:flex;align-items:center;gap:2px;min-width:0;flex:1}.fb-set input{width:100%;min-width:0;height:30px;border:0;border-radius:3px;background:#1b2117;color:#f0f3e9;padding:4px 5px;font-size:12px;text-align:center;-moz-appearance:textfield}.fb-set input::-webkit-inner-spin-button,.fb-set input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.fb-set input::placeholder{color:#75816a;font-size:10px}.fb-set label>span:last-child{font-size:8px;color:#7f8a75}.fb-check{width:32px;min-width:32px;height:32px;display:grid;place-items:center;border:1px solid #3a4531!important;border-radius:5px;color:#67735c!important}.is-done .fb-check{background:var(--accent)!important;color:#17240c!important;border-color:var(--accent)!important}.fb-check:hover{border-color:var(--accent)!important}.fb-exercise-details{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0 0 38px;padding-top:18px;border-top:1px solid var(--border)}.fb-exercise-details>div>p:nth-child(2){font-size:12px;color:#c8d0c1;line-height:1.8;margin-top:9px}.fb-exercise-note{margin-top:10px!important;font-size:10px;color:#a6b298;line-height:1.7}.fb-reference-images{display:grid;grid-template-columns:1fr 1fr;gap:6px}.fb-reference-images figure>div{background:#f6f6f2;aspect-ratio:1;border-radius:5px;overflow:hidden;display:grid;place-items:center}.fb-reference img{width:100%;height:100%;object-fit:contain}.fb-reference figcaption{font-size:8px;color:#9da991;margin-top:5px;letter-spacing:.05em}.fb-reference>a{display:inline-block;font-size:8px;color:#97a788;margin-top:7px;text-underline-offset:3px}.fb-image-fallback{font-size:9px;color:#555;padding:10px;text-align:center}.fb-rest-shortcuts{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin-top:15px}.fb-rest-shortcuts>span{font-size:9px;color:var(--muted);margin-right:4px}.fb-rest-shortcuts button{font-size:10px;border:1px solid #3b4930;border-radius:4px;padding:5px 7px;color:#c9dfb5}.fb-sidebar{display:flex;flex-direction:column;gap:17px;position:sticky;top:22px}.fb-sidebar>section{border:1px solid var(--border);border-radius:9px;padding:21px;background:#131713}.fb-progress-card .fb-eyebrow{color:#b4c2a5}.fb-progress-value{display:flex;align-items:center;justify-content:space-between;margin:13px 0 16px}.fb-progress-value>strong{font-size:50px;font-weight:500;letter-spacing:-.065em;line-height:1}.fb-progress-value>strong>span{font-size:25px;color:#75806d;margin-left:3px;letter-spacing:-.04em}.fb-progress-value>span{font-size:8px;color:#a4b297;letter-spacing:.08em}.fb-progress-track{height:4px;background:#333d2c;border-radius:3px;overflow:hidden}.fb-progress-track>span{display:block;height:100%;background:var(--accent);transition:width .2s}.fb-progress-card>p:last-child{font-size:10px;color:#a2b095;line-height:1.8;margin-top:13px}.fb-timer-heading{display:flex;align-items:center;justify-content:space-between}.fb-timer-number{font-size:54px;letter-spacing:-.055em;line-height:1.1;margin:17px 0 9px;font-weight:400;font-variant-numeric:tabular-nums}.fb-timer>p{color:#9ca990;font-size:10px;min-height:30px}.fb-timer-buttons{display:flex;gap:7px;margin-top:15px}.fb-timer-buttons>button{flex:1;border:1px solid #3a4631;border-radius:5px;padding:9px 4px;font-size:11px;background:#1d2518}.fb-timer-buttons>button:hover,.fb-rest-shortcuts>button:hover{border-color:var(--accent)}.fb-stop-timer{font-size:9px;color:var(--muted)!important;text-decoration:underline;margin-top:12px;padding:3px 0}.fb-rules ol{list-style:none;padding:0;margin:19px 0 0;display:flex;flex-direction:column;gap:16px}.fb-rules li{display:flex;gap:12px;align-items:flex-start}.fb-rules li>span{font-size:9px;color:#7f906e;border:1px solid #35442b;border-radius:50%;width:23px;height:23px;display:grid;place-items:center;flex-shrink:0}.fb-rules li>div{font-size:11px;line-height:1.5;color:#d5ddcd}.fb-rules li strong{font-size:10px;font-weight:400;display:block;color:#96a789;margin-top:2px}.fb-rules>p{font-size:10px;color:#9cac90;line-height:1.8;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}.fb-time-note{background:transparent!important}.fb-time-note>strong{font-size:16px;display:block;margin:10px 0}.fb-time-note>p:last-child{font-size:11px;color:#a1ad98;line-height:1.8}.fb-session-footer{display:flex;justify-content:space-between;align-items:center;gap:15px;font-size:10px;color:#97a58b;flex-wrap:wrap}.fb-session-footer button{font-size:10px;padding:6px 0;color:#adb7a4;text-decoration:underline;text-underline-offset:3px}.fb-session-footer>div{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.fb-storage-error{color:#f2bd81}.fb-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:27px 0;margin-top:55px;border-top:1px solid var(--border);font-size:9px;color:#839078;letter-spacing:.05em}.fb-footer>a{text-decoration:none}.fb-footer>a:hover{text-decoration:underline}.fb-guide{padding-top:38px}.fb-guide-intro{max-width:690px}.fb-guide-intro h2{font-size:38px;letter-spacing:-.04em;line-height:1.15;margin:13px 0 18px}.fb-guide-intro>p:last-child{font-size:14px;color:var(--muted);line-height:1.8}.fb-guide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:30px 0}.fb-guide-grid article{border:1px solid var(--border);border-radius:10px;padding:27px;background:#131713}.fb-guide-number{font-size:11px;color:var(--accent)}.fb-guide-grid h3{font-size:23px;letter-spacing:-.03em;margin:16px 0 12px}.fb-guide-grid p{font-size:13px;line-height:1.9;color:var(--muted)}.fb-guide-grid article>strong{display:block;font-size:11px;color:#d1e7bc;margin-top:17px;font-weight:500}.fb-volume{display:grid;grid-template-columns:1fr 1fr;gap:70px;padding:30px 0}.fb-volume h3{font-size:30px;letter-spacing:-.04em;margin:12px 0}.fb-volume>div>p:last-child{font-size:12px;color:var(--muted);line-height:1.9}.fb-volume-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border)}.fb-volume-row:first-child{padding-top:0}.fb-volume-row strong{font-size:13px;font-weight:500}.fb-volume-row small{display:block;font-size:10px;color:var(--muted);margin-top:3px}.fb-volume-row>span{font-size:25px;color:var(--accent);line-height:1;text-align:right}.fb-volume-row>span small{font-size:8px;margin-top:6px}.fb-volume-extra{margin-top:18px!important}.fb-guide-note{border-left:2px solid var(--accent);padding:15px 20px;background:#182013;margin-top:20px}.fb-guide-note>strong{font-size:13px}.fb-guide-note>p{font-size:12px;line-height:1.8;color:var(--muted);margin-top:7px}.fb-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-@media(min-width:1500px){.fb-app{padding-left:50px;padding-right:50px}}
-@media(max-width:1050px){.fb-workout-layout{grid-template-columns:minmax(0,1fr) 245px;gap:20px}.fb-stats>div{padding:22px 18px;gap:12px}.fb-stats strong{font-size:30px}.fb-stats span{font-size:10px}.fb-hero{gap:35px}.fb-exercise-name{font-size:14px}.fb-workout-header{align-items:flex-start;flex-direction:column;gap:15px}.fb-date{flex-direction:row;align-items:center;gap:12px}.fb-sidebar>section{padding:18px}.fb-set-grid{margin-left:0}.fb-exercise-details{margin-left:0}.fb-hero-aside{padding:22px}.fb-pair-explanation{flex-direction:column;gap:4px}}
-@media(max-width:800px){.fb-app{padding:0 20px}.fb-topbar{min-height:75px}.fb-topbar-right{font-size:8px;letter-spacing:.08em}.fb-brand-tag{display:none}.fb-hero{padding:38px 0 30px;gap:25px;grid-template-columns:1.3fr 1fr}.fb-hero h1{font-size:49px}.fb-hero-description{font-size:12px}.fb-hero-aside{min-height:250px;padding:17px}.fb-week-strip{gap:4px}.fb-week-strip>span{font-size:9px}.fb-hero-aside-label{font-size:8px}.fb-hero-aside>p{font-size:9px}.fb-hero-outline{font-size:280px;top:-65px}.fb-stats>div{flex-direction:column;align-items:flex-start;gap:8px;padding:18px}.fb-stats span{max-width:none}.fb-workout-layout{grid-template-columns:minmax(0,1fr)}.fb-sidebar{position:static;display:grid;grid-template-columns:1fr 1fr;gap:15px}.fb-rules{grid-row:span 2}.fb-sidebar .fb-progress-card{grid-column:1 / -1}.fb-progress-card .fb-progress-value{margin:8px 0 12px}.fb-progress-card .fb-progress-value>strong{font-size:40px}.fb-sidebar .fb-time-note{grid-column:1 / -1}.fb-workout-header{flex-direction:row;align-items:center}.fb-date{flex-direction:column;align-items:flex-start;gap:6px}.fb-day-tabs{margin-bottom:28px}.fb-exercise-name{font-size:16px}.fb-set-grid{margin-left:38px}.fb-volume{gap:35px}.fb-footer{margin-top:35px}}
-@media(max-width:540px){.fb-app{padding:0 14px}.fb-topbar{min-height:69px}.fb-brand{font-size:11px;gap:8px}.fb-brand-symbol{width:30px;height:30px;font-size:24px}.fb-topbar-right{max-width:115px;font-size:8px;line-height:1.7;gap:7px;letter-spacing:.06em}.fb-hero{grid-template-columns:1fr;gap:24px;padding:30px 0 24px}.fb-hero h1{font-size:51px;margin:17px 0}.fb-hero-description{font-size:13px;max-width:340px}.fb-hero-tags{margin-top:18px;gap:6px}.fb-hero-tags span{font-size:9px}.fb-hero-aside{min-height:0;padding:17px}.fb-hero-outline{font-size:230px;right:10px;top:-60px}.fb-week-strip{max-width:360px;gap:6px}.fb-week-strip>span{font-size:10px;gap:3px;padding:7px 0}.fb-hero-aside-label{font-size:8px;margin-bottom:11px}.fb-hero-aside>p{font-size:10px;margin-top:11px}.fb-stats>div{padding:14px 9px;gap:7px}.fb-stats strong{font-size:27px}.fb-stats span{font-size:8px;line-height:1.6}.fb-view-nav{gap:18px;margin-top:17px}.fb-view-nav>button{font-size:11px;padding:15px 0}.fb-view-nav button>span{display:none}.fb-view-nav .fb-export{font-size:9px;gap:5px}.fb-export svg{width:14px}.fb-day-tabs{gap:7px;margin:20px 0 26px}.fb-day-tabs>button{padding:12px 9px;gap:8px;border-radius:6px}.fb-day-letter{width:25px;height:31px;font-size:16px}.fb-day-tabs strong{font-size:10px}.fb-day-tabs small{font-size:8px}.fb-day-tabs svg{display:none}.fb-workout-header{flex-direction:column;align-items:flex-start;gap:13px}.fb-workout-header h2{font-size:28px}.fb-workout-header>div>p:last-child{font-size:11px;line-height:1.8}.fb-date{flex-direction:row;align-items:center;gap:11px}.fb-date input{max-width:150px}.fb-warmup{margin-top:18px;padding:12px;gap:10px}.fb-warmup p{font-size:10px}.fb-warmup strong{font-size:10px}.fb-pair-explanation{font-size:9px;margin-bottom:14px}.fb-pair{margin-bottom:15px}.fb-pair-heading{font-size:8px;padding:9px 12px}.fb-exercise{padding:16px 12px}.fb-exercise-main{gap:9px}.fb-exercise-number{font-size:11px;min-width:21px}.fb-exercise-name{font-size:13px;margin:4px 0;max-width:205px}.fb-muscle{font-size:8px}.fb-details-link{font-size:8px;gap:5px}.fb-prescription strong{font-size:15px}.fb-prescription small{font-size:7px;max-width:74px}.fb-prescription strong span{margin:0 1px;font-size:10px}.fb-set-grid{margin-left:0;gap:7px;margin-top:14px}.fb-set{gap:4px;padding:5px}.fb-set-label{font-size:8px;min-width:13px}.fb-set label{gap:2px}.fb-set label>span:last-child{font-size:7px}.fb-set input{height:31px;font-size:11px;padding:4px 2px}.fb-check{min-width:30px;width:30px;height:34px}.fb-exercise-details{grid-template-columns:1fr;gap:16px;margin-top:16px}.fb-reference-images{max-width:310px}.fb-reference-images figure>div{aspect-ratio:1.2}.fb-sidebar{gap:12px}.fb-sidebar>section{padding:16px}.fb-timer-number{font-size:42px}.fb-timer-buttons{gap:4px;flex-wrap:wrap}.fb-timer-buttons>button{font-size:10px;min-width:35px}.fb-rules li{gap:8px}.fb-rules li>div{font-size:10px}.fb-rules li strong{font-size:9px}.fb-rules>p{font-size:9px}.fb-session-footer{font-size:9px;align-items:flex-start}.fb-session-footer button{font-size:9px}.fb-footer{align-items:flex-start;gap:12px;flex-wrap:wrap;font-size:8px;padding:23px 0}.fb-footer>span:nth-child(2){display:none}.fb-guide{padding-top:25px}.fb-guide-intro h2{font-size:31px}.fb-guide-intro>p:last-child{font-size:12px}.fb-guide-grid{grid-template-columns:1fr;gap:12px;margin:24px 0}.fb-guide-grid article{padding:21px}.fb-guide-grid h3{font-size:22px;margin:11px 0}.fb-guide-grid p{font-size:12px}.fb-volume{grid-template-columns:1fr;gap:25px;padding:20px 0}.fb-volume h3{font-size:27px}.fb-guide-note{padding:14px}.fb-guide-note>p{font-size:11px}}
-@media(prefers-reduced-motion:reduce){.fb-app *{scroll-behavior:auto!important;transition:none!important}}
-@media print{.fb-app{background:#fff;color:#111;padding:0;--accent:#111}.fb-sidebar,.fb-hero-aside,.fb-view-nav,.fb-set-grid,.fb-details-link,.fb-date,.fb-session-footer,.fb-footer,.fb-day-tabs{display:none!important}.fb-hero{padding:15px 0}.fb-hero h1{font-size:35px}.fb-hero h1 em{color:#111}.fb-workout-layout{display:block}.fb-stats,.fb-pair,.fb-exercise,.fb-warmup{background:#fff;color:#111;border-color:#ccc}.fb-pair{break-inside:avoid}.fb-pair-heading{background:#eee;color:#111}.fb-exercise-name,.fb-prescription,.fb-muscle,.fb-workout-header p,.fb-warmup p,.fb-warmup strong{color:#222}.fb-hero-tags span{color:#333}.fb-exercise{padding:12px}.fb-stats>div{padding:12px}.fb-workout-header{margin-top:20px}.fb-hero-description,.fb-eyebrow,.fb-stats span,.fb-pair-explanation{color:#444}}
-`;
