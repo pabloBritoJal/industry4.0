@@ -26,7 +26,7 @@ export function findPrevious(
 // Si ambas series de la última vez llegaron al máximo del rango, toca subir carga.
 export function suggestion(previous: Previous | null, range: string) {
   if (!previous) return null;
-  const max = Number(range.split("–").pop());
+  const max = Math.max(0, ...(range.match(/\d+/g) ?? []).map(Number));
   if (!max) return null;
   const reachedMax = previous.sets.every((set) => Number(set.reps) >= max);
   return reachedMax ? "Llegaste al máximo del rango: sube la carga al mínimo." : null;
